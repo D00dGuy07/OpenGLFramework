@@ -85,6 +85,8 @@ public:
 	ImageBuffer(uint32_t rendererID, int32_t width, int32_t height)
 		: m_RendererID(rendererID), m_Width(width), m_Height(height) {}
 
+	virtual ~ImageBuffer() {}
+
 	// Clears data and reallocates buffer to specified size
 	virtual void Reallocate(int32_t width, int32_t height) = 0;
 

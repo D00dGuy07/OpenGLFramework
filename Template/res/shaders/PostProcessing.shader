@@ -39,7 +39,7 @@ void main()
         vec2(-offsetX, -offsetY), // bottom-left
         vec2(0.0f, -offsetY), // bottom-center
         vec2(offsetX, -offsetY)  // bottom-right    
-        );
+    );
 
     float kernel[9] = float[](
         1.0 / 16, 2.0 / 16, 1.0 / 16,

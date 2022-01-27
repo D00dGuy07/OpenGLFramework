@@ -166,8 +166,10 @@
     <ClCompile Include="src\Renderer\RenderCommandQueue.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Renderer\ShaderBase.cpp" />
     <ClCompile Include="src\Renderer\Texture.cpp" />
-    <ClCompile Include="src\Renderer\TextureAtlas.cpp" />
+    <ClCompile Include="src\Renderer\Helpers.cpp" />
+    <ClCompile Include="src\Renderer\Uniform.cpp" />
     <ClCompile Include="src\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="src\Util\GLFWEventWrapper.cpp" />
@@ -184,8 +186,10 @@
     <ClInclude Include="src\Renderer\RenderCommandQueue.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Renderer\Shader.h" />
+    <ClInclude Include="src\Renderer\ShaderBase.h" />
     <ClInclude Include="src\Renderer\Texture.h" />
-    <ClInclude Include="src\Renderer\TextureAtlas.h" />
+    <ClInclude Include="src\Renderer\Helpers.h" />
+    <ClInclude Include="src\Renderer\Uniform.h" />
     <ClInclude Include="src\Renderer\VertexArray.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\Renderer\VertexBufferLayout.h" />

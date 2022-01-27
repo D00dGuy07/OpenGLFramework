@@ -200,6 +200,9 @@ void Framebuffer::Unbind()
 
 void Framebuffer::Resize(int32_t width, int32_t height)
 {
+	if (width < 1 || height < 1)
+		throw std::invalid_argument("Width and Height of framebuffer must be greater than 0!");
+
 	for (FBOAttachment attachment : m_ColorAttachments)
 		attachment.Buffer->Reallocate(width, height);
 	for (FBOAttachment attachment : m_OtherAttachments)

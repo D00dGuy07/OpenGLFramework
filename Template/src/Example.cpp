@@ -21,9 +21,9 @@
 
 Example::Example(GLFWwindow* window)
 	: m_WindowPointer(window), 
-	m_SquareShader(new Shader("res/shaders/Square.shader")), m_SquareMesh(new Mesh()),
+	m_SquareShader(new Shader("res/shaders/Square.shaderbin", true)), m_SquareMesh(new Mesh()),
 	m_Projection(glm::ortho(-1.0f, 1.0f, -0.5625f, 0.5625f)),
-	m_PostShader(new Shader("res/shaders/PostProcessing.shader")), m_PostMesh(new Mesh())
+	m_PostShader(new Shader("res/shaders/PostProcessing.shaderbin", true)), m_PostMesh(new Mesh())
 {
 	// Set up square mesh and shader
 
@@ -45,7 +45,7 @@ Example::Example(GLFWwindow* window)
 	m_SquareMesh->BufferLayout.Push<float>(3);
 	m_SquareMesh->Construct();
 
-	m_SquareShader->SetUniformMat4f("u_Proj", m_Projection);
+	m_SquareShader->SetUniformMatrix4f("u_Proj", m_Projection);
 
 	// Build framebuffer
 
@@ -67,8 +67,8 @@ Example::Example(GLFWwindow* window)
 	m_PostMesh->Construct();
 
 	m_PostShader->SetUniform1i("u_Texture", 0);
-	m_PostShader->SetUniform1i("u_Width", 1280 / 4.0f);
-	m_PostShader->SetUniform1i("u_Height", 720 / 4.0f);
+	m_PostShader->SetUniform1i("u_Width", 1280 / 4);
+	m_PostShader->SetUniform1i("u_Height", 720 / 4);
 
 	// Connect resizing
 
@@ -93,6 +93,9 @@ Example::~Example()
 
 void Example::Resize(const int& width, const int& height)
 {
+	if (width < 1 || height < 1)
+		return;
+
 	// Resize render output
 	Renderer::Submit([width, height]() {
 		glViewport(0, 0, width, height);
@@ -101,9 +104,12 @@ void Example::Resize(const int& width, const int& height)
 	// Resize framebuffer
 	m_Framebuffer->Resize(width, height);
 
+	// Check completeness
+	m_Framebuffer->Bind();
+
 	// Update post processing shader
-	m_PostShader->SetUniform1i("u_Width", width / 4.0f);
-	m_PostShader->SetUniform1i("u_Height", height / 4.0f);
+	m_PostShader->SetUniform1i("u_Width", width / 4);
+	m_PostShader->SetUniform1i("u_Height", height / 4);
 
 	// Update projection to preserve the aspect ratio and send it to the shader
 	if (width > height)
@@ -113,7 +119,7 @@ void Example::Resize(const int& width, const int& height)
 	else if (height == width)
 		m_Projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
 
-	m_SquareShader->SetUniformMat4f("u_Proj", m_Projection);
+	m_SquareShader->SetUniformMatrix4f("u_Proj", m_Projection);
 
 	// Draw here because event polling hangs the render loop
 	Draw();
@@ -155,4 +161,15 @@ void Example::run()
 		Draw();
 		glfwPollEvents();
 	}
+
+	/*
+	ShaderBinary squareBinary = m_SquareShader->GetBinary();
+	squareBinary.WriteFile("res/shaders/Square.shaderbin");
+	squareBinary.Free();
+
+	ShaderBinary postBinary = m_PostShader->GetBinary();
+	postBinary.WriteFile("res/shaders/PostProcessing.shaderbin");
+	postBinary.Free();
+	*/
+	
 }

@@ -86,6 +86,7 @@ StyleCopReport.xml
 *.sbr
 *.tlb
 *.tli
+*.tlog
 *.tlh
 *.tmp
 *.tmp_proj
