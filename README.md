@@ -1,5 +1,2 @@
 # OpenGLFramework
-This is structured like a template for my opengl projects.
-
-# Notes
-GLFW Event wrapper thing is not really final because I am considering removing glfw and creating my own win32 wrapper.
+This is my OpenGL rendering framework and it always has a test project attached which will probably reflect what I am currently developing. Currently it is a demo of a post processing shader using my new framebuffer API.
