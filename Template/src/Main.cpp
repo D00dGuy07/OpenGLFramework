@@ -6,7 +6,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "Example.h"
+#include "Demos/PostProcessQuad.h"
 
 // Enable Nvidia
 #include <windows.h>
@@ -154,8 +154,9 @@ int main(void)
 	std::cout << glGetString(GL_RENDERER) << "\n\n";
 
 	// Run application
-	Example example(window);
-	example.run();
+	Demo* demo = new PostProcessQuad(window);
+	demo->run();
+    delete demo;
 
 	// Clean stuff up
 	glfwTerminate();

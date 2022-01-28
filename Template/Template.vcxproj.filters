@@ -27,7 +27,7 @@
     <ClCompile Include="src\Renderer\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\Helpers.cpp">
+    <ClCompile Include="src\Util\Helpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\VertexArray.cpp">
@@ -45,7 +45,7 @@
     <ClCompile Include="src\Renderer\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Example.cpp">
+    <ClCompile Include="src\Demos\PostProcessQuad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Util\GLFWEventWrapper.cpp">
@@ -72,6 +72,9 @@
     <ClCompile Include="src\Renderer\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\GLHelpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\IndexBuffer.h">
@@ -83,7 +86,7 @@
     <ClInclude Include="src\Renderer\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\Helpers.h">
+    <ClInclude Include="src\Util\Helpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\VertexArray.h">
@@ -947,7 +950,7 @@
     <ClInclude Include="src\Renderer\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Example.h">
+    <ClInclude Include="src\Demos\PostProcessQuad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Util\GLFWEventWrapper.h">
@@ -972,6 +975,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Demo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\GLHelpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1384,7 +1393,7 @@
     <None Include="vendor\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="res\shaders\Square.shader" />
-    <None Include="res\shaders\PostProcessing.shader" />
+    <None Include="res\PostProcessQuad\Square.shader" />
+    <None Include="res\PostProcessQuad\PostProcessing.shader" />
   </ItemGroup>
 </Project>

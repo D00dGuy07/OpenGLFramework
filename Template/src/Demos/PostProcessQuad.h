@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Demo.h"
+
 #include "glm/glm.hpp"
 
 struct GLFWwindow;
@@ -9,15 +11,14 @@ class Mesh;
 
 class Framebuffer;
 
-class Example
+class PostProcessQuad : public Demo
 {
 public:
-	Example(GLFWwindow* window);
-	~Example();
-	void run();
-private:
-	GLFWwindow* m_WindowPointer;
+	PostProcessQuad(GLFWwindow* window);
+	virtual ~PostProcessQuad() override;
 
+	virtual void run() override;
+private:
 	// Colored square data
 	Shader* m_SquareShader;
 	Mesh* m_SquareMesh;

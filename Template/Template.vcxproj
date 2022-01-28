@@ -156,9 +156,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Example.cpp" />
+    <ClCompile Include="src\Demos\PostProcessQuad.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Renderer\Framebuffer.cpp" />
+    <ClCompile Include="src\Renderer\GLHelpers.cpp" />
     <ClCompile Include="src\Renderer\ImageBuffer.cpp" />
     <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
     <ClCompile Include="src\Renderer\Mesh.cpp" />
@@ -168,7 +169,7 @@
     <ClCompile Include="src\Renderer\Shader.cpp" />
     <ClCompile Include="src\Renderer\ShaderBase.cpp" />
     <ClCompile Include="src\Renderer\Texture.cpp" />
-    <ClCompile Include="src\Renderer\Helpers.cpp" />
+    <ClCompile Include="src\Util\Helpers.cpp" />
     <ClCompile Include="src\Renderer\Uniform.cpp" />
     <ClCompile Include="src\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
@@ -177,8 +178,10 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Example.h" />
+    <ClInclude Include="src\Demo.h" />
+    <ClInclude Include="src\Demos\PostProcessQuad.h" />
     <ClInclude Include="src\Renderer\Framebuffer.h" />
+    <ClInclude Include="src\Renderer\GLHelpers.h" />
     <ClInclude Include="src\Renderer\ImageBuffer.h" />
     <ClInclude Include="src\Renderer\IndexBuffer.h" />
     <ClInclude Include="src\Renderer\Mesh.h" />
@@ -188,7 +191,7 @@
     <ClInclude Include="src\Renderer\Shader.h" />
     <ClInclude Include="src\Renderer\ShaderBase.h" />
     <ClInclude Include="src\Renderer\Texture.h" />
-    <ClInclude Include="src\Renderer\Helpers.h" />
+    <ClInclude Include="src\Util\Helpers.h" />
     <ClInclude Include="src\Renderer\Uniform.h" />
     <ClInclude Include="src\Renderer\VertexArray.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
@@ -479,8 +482,8 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\Square.shader" />
-    <None Include="res\shaders\PostProcessing.shader" />
+    <None Include="res\PostProcessQuad\Square.shader" />
+    <None Include="res\PostProcessQuad\PostProcessing.shader" />
     <None Include="vendor\glm\detail\func_common.inl" />
     <None Include="vendor\glm\detail\func_common_simd.inl" />
     <None Include="vendor\glm\detail\func_exponential.inl" />

@@ -1,4 +1,4 @@
-#include "Example.h"
+#include "Demos/PostProcessQuad.h"
 
 // Rendering includes
 #include "Renderer/Shader.h"
@@ -10,6 +10,8 @@
 #include "Renderer/Texture.h"
 #include "Renderer/RenderBuffer.h"
 
+#include "Util/Helpers.h"
+
 // glm includes
 #include <glm/ext/matrix_clip_space.hpp>
 
@@ -19,12 +21,24 @@
 #include "Util/GLFWEventWrapper.h"
 #include <iostream>
 
-Example::Example(GLFWwindow* window)
-	: m_WindowPointer(window), 
-	m_SquareShader(new Shader("res/shaders/Square.shaderbin", true)), m_SquareMesh(new Mesh()),
+PostProcessQuad::PostProcessQuad(GLFWwindow* window)
+	: Demo(window), 
+	m_SquareShader(NULL), m_SquareMesh(new Mesh()),
 	m_Projection(glm::ortho(-1.0f, 1.0f, -0.5625f, 0.5625f)),
-	m_PostShader(new Shader("res/shaders/PostProcessing.shaderbin", true)), m_PostMesh(new Mesh())
+	m_PostShader(NULL), m_PostMesh(new Mesh())
 {
+	// Compile/Load shaders
+	
+	if (FileHelpers::FileExists("res/PostProcessQuad/Square.shaderbin"))
+		m_SquareShader = new Shader("res/PostProcessQuad/Square.shaderbin", true);
+	else
+		m_SquareShader = new Shader("res/PostProcessQuad/Square.shader", false);
+
+	if (FileHelpers::FileExists("res/PostProcessQuad/PostProcessing.shaderbin"))
+		m_PostShader = new Shader("res/PostProcessQuad/PostProcessing.shaderbin", true);
+	else
+		m_PostShader = new Shader("res/PostProcessQuad/PostProcessing.shader", false);
+
 	// Set up square mesh and shader
 
 	float squareVertices[] = {
@@ -80,7 +94,7 @@ Example::Example(GLFWwindow* window)
 	));
 }
 
-Example::~Example()
+PostProcessQuad::~PostProcessQuad()
 {
 	delete m_SquareMesh;
 	delete m_SquareShader;
@@ -91,7 +105,7 @@ Example::~Example()
 		delete m_Framebuffer;
 }
 
-void Example::Resize(const int& width, const int& height)
+void PostProcessQuad::Resize(const int& width, const int& height)
 {
 	if (width < 1 || height < 1)
 		return;
@@ -125,7 +139,7 @@ void Example::Resize(const int& width, const int& height)
 	Draw();
 }
 
-void Example::SetupFramebuffer(const int& width, const int& height)
+void PostProcessQuad::SetupFramebuffer(const int& width, const int& height)
 {
 	FramebufferSpec spec = {
 		static_cast<uint32_t>(width), static_cast<uint32_t>(height),
@@ -139,7 +153,7 @@ void Example::SetupFramebuffer(const int& width, const int& height)
 	static_cast<Texture*>(m_Framebuffer->GetColorAttachment(0).Buffer)->Bind();
 }
 
-void Example::Draw()
+void PostProcessQuad::Draw()
 {
 	m_Framebuffer->Bind();
 	Renderer::Clear();
@@ -153,7 +167,7 @@ void Example::Draw()
 	glfwSwapBuffers(m_WindowPointer);
 }
 
-void Example::run()
+void PostProcessQuad::run()
 {
 	// Render loop
 	while (!glfwWindowShouldClose(m_WindowPointer))
@@ -162,14 +176,11 @@ void Example::run()
 		glfwPollEvents();
 	}
 
-	/*
 	ShaderBinary squareBinary = m_SquareShader->GetBinary();
-	squareBinary.WriteFile("res/shaders/Square.shaderbin");
+	squareBinary.WriteFile("res/PostProcessQuad/Square.shaderbin");
 	squareBinary.Free();
 
 	ShaderBinary postBinary = m_PostShader->GetBinary();
-	postBinary.WriteFile("res/shaders/PostProcessing.shaderbin");
+	postBinary.WriteFile("res/PostProcessQuad/PostProcessing.shaderbin");
 	postBinary.Free();
-	*/
-	
 }
