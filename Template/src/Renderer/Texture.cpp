@@ -68,6 +68,15 @@ void Texture::Bind(uint32_t slot) const
 	});
 }
 
+void Texture::BindImage(uint32_t slot)
+{
+	int32_t sizedId = 0, baseId = 0;
+	ImageBuffer::GetFormatData(m_Format, sizedId, baseId);
+	Renderer::Submit([=]() {
+		glBindImageTexture(slot, m_RendererID, 0, GL_FALSE, 0, GL_READ_WRITE, sizedId);
+	});
+}
+
 void Texture::Reallocate(int32_t width, int32_t height)
 {
 	m_Width = width;

@@ -156,8 +156,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Demos\ComputeTexture.cpp" />
     <ClCompile Include="src\Demos\PostProcessQuad.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Renderer\ComputeShader.cpp" />
     <ClCompile Include="src\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Renderer\GLHelpers.cpp" />
     <ClCompile Include="src\Renderer\ImageBuffer.cpp" />
@@ -179,7 +181,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Demo.h" />
+    <ClInclude Include="src\Demos\ComputeTexture.h" />
     <ClInclude Include="src\Demos\PostProcessQuad.h" />
+    <ClInclude Include="src\Renderer\ComputeShader.h" />
     <ClInclude Include="src\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Renderer\GLHelpers.h" />
     <ClInclude Include="src\Renderer\ImageBuffer.h" />
@@ -482,6 +486,8 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\ComputeTexture\Render.shader" />
+    <None Include="res\ComputeTexture\Texture.shader" />
     <None Include="res\PostProcessQuad\Square.shader" />
     <None Include="res\PostProcessQuad\PostProcessing.shader" />
     <None Include="vendor\glm\detail\func_common.inl" />

@@ -4,8 +4,6 @@
 
 #include "glm/glm.hpp"
 
-struct GLFWwindow;
-
 class Shader;
 class Mesh;
 

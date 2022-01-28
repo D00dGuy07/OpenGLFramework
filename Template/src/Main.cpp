@@ -6,7 +6,9 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+// Demos
 #include "Demos/PostProcessQuad.h"
+#include "Demos/ComputeTexture.h"
 
 // Enable Nvidia
 #include <windows.h>
@@ -154,7 +156,7 @@ int main(void)
 	std::cout << glGetString(GL_RENDERER) << "\n\n";
 
 	// Run application
-	Demo* demo = new PostProcessQuad(window);
+	Demo* demo = new ComputeTexture(window);
 	demo->run();
     delete demo;
 

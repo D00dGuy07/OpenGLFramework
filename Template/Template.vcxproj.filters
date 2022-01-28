@@ -75,6 +75,12 @@
     <ClCompile Include="src\Renderer\GLHelpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Demos\ComputeTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\ComputeShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\IndexBuffer.h">
@@ -983,6 +989,12 @@
     <ClInclude Include="src\Renderer\GLHelpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Demos\ComputeTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\ComputeShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\glm\detail\func_common.inl">
@@ -1395,5 +1407,7 @@
     </None>
     <None Include="res\PostProcessQuad\Square.shader" />
     <None Include="res\PostProcessQuad\PostProcessing.shader" />
+    <None Include="res\ComputeTexture\Render.shader" />
+    <None Include="res\ComputeTexture\Texture.shader" />
   </ItemGroup>
 </Project>

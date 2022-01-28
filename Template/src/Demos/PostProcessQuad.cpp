@@ -4,13 +4,13 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Mesh.h"
 #include "Renderer/Renderer.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/IndexBuffer.h"
 #include "Renderer/Framebuffer.h"
 #include "Renderer/Texture.h"
 #include "Renderer/RenderBuffer.h"
 
+// Util Includes
 #include "Util/Helpers.h"
+#include "Util/GLFWEventWrapper.h"
 
 // glm includes
 #include <glm/ext/matrix_clip_space.hpp>
@@ -18,7 +18,6 @@
 // GLFW
 #include "GLFW/glfw3.h"
 
-#include "Util/GLFWEventWrapper.h"
 #include <iostream>
 
 PostProcessQuad::PostProcessQuad(GLFWwindow* window)

@@ -12,7 +12,8 @@ public:
 	virtual ~Texture() override;
 
 	void Bind(uint32_t slot = 0) const;
-	
+	void BindImage(uint32_t slot = 0);
+
 	virtual void Reallocate(int32_t width, int32_t height) override;
 	
 private:
