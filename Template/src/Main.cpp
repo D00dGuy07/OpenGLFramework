@@ -21,7 +21,7 @@ int main(void)
 		return -1;
 
 	// Run application
-	Demo* demo = new ComputeTexture(window);
+	Demo* demo = new PostProcessQuad(window);
 	demo->run();
     delete demo;
 
