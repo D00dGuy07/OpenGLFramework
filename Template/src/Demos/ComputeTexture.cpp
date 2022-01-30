@@ -76,14 +76,6 @@ ComputeTexture::ComputeTexture(GLFWwindow* window)
 	GLMemoryHelper::Barrier(GLMemoryHelper::BarrierType::ShaderImgAccess);
 }
 
-ComputeTexture::~ComputeTexture()
-{
-	delete m_SquareMesh;
-	delete m_RenderShader;
-	delete m_TextureShader;
-	delete m_Texture;
-}
-
 void ComputeTexture::Resize(const int& width, const int& height)
 {
 	// Resize render output
@@ -133,4 +125,15 @@ void ComputeTexture::run()
 	ShaderBinary textureBinary = m_TextureShader->GetBinary();
 	textureBinary.WriteFile("res/ComputeTexture/Texture.shaderbin");
 	textureBinary.Free();
+
+	Free();
+	Renderer::DrawFrame();
+}
+
+void ComputeTexture::Free()
+{
+	delete m_SquareMesh;
+	delete m_RenderShader;
+	delete m_TextureShader;
+	delete m_Texture;
 }

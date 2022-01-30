@@ -13,7 +13,6 @@ class PostProcessQuad : public Demo
 {
 public:
 	PostProcessQuad(GLFWwindow* window);
-	virtual ~PostProcessQuad() override;
 
 	virtual void run() override;
 private:
@@ -32,4 +31,5 @@ private:
 	void Resize(const int& width, const int& height);
 	void SetupFramebuffer(const int& width, const int& height);
 	void Draw();
+	void Free();
 };

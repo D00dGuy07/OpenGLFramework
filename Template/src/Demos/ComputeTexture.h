@@ -13,7 +13,6 @@ class ComputeTexture : public Demo
 {
 public:
 	ComputeTexture(GLFWwindow* window);
-	virtual ~ComputeTexture() override;
 
 	virtual void run() override;
 private:
@@ -25,4 +24,5 @@ private:
 
 	void Resize(const int& width, const int& height);
 	void Draw();
+	void Free();
 };

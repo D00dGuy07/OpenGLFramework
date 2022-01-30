@@ -93,17 +93,6 @@ PostProcessQuad::PostProcessQuad(GLFWwindow* window)
 	));
 }
 
-PostProcessQuad::~PostProcessQuad()
-{
-	delete m_SquareMesh;
-	delete m_SquareShader;
-	delete m_PostMesh;
-	delete m_PostShader;
-
-	if (m_Framebuffer != NULL)
-		delete m_Framebuffer;
-}
-
 void PostProcessQuad::Resize(const int& width, const int& height)
 {
 	if (width < 1 || height < 1)
@@ -182,4 +171,16 @@ void PostProcessQuad::run()
 	ShaderBinary postBinary = m_PostShader->GetBinary();
 	postBinary.WriteFile("res/PostProcessQuad/PostProcessing.shaderbin");
 	postBinary.Free();
+
+	Free();
+	Renderer::DrawFrame();
+}
+
+void PostProcessQuad::Free()
+{
+	delete m_SquareMesh;
+	delete m_SquareShader;
+	delete m_PostMesh;
+	delete m_PostShader;
+	delete m_Framebuffer;
 }

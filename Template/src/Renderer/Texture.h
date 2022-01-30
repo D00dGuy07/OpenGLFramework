@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include "Renderer/ImageBuffer.h"
 
@@ -21,5 +22,12 @@ private:
 	int32_t m_BPP;
 	InternalImageFormat m_Format;
 
-	static uint32_t m_BoundRendererID;
+	static std::vector<uint32_t> m_BoundTextureUnits;
+	static uint32_t m_MaxTextureUnits;
+
+	static std::vector<uint32_t> m_BoundImageUnits;
+	static uint32_t m_MaxImageUnits;
+
+	static void ReserveBindings();
+	static void FreeBinding(uint32_t rendererId);
 };
