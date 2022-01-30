@@ -171,6 +171,7 @@
     <ClCompile Include="src\Renderer\Shader.cpp" />
     <ClCompile Include="src\Renderer\ShaderBase.cpp" />
     <ClCompile Include="src\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Util\GLFWLoad.cpp" />
     <ClCompile Include="src\Util\Helpers.cpp" />
     <ClCompile Include="src\Renderer\Uniform.cpp" />
     <ClCompile Include="src\Renderer\VertexArray.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="src\Renderer\Shader.h" />
     <ClInclude Include="src\Renderer\ShaderBase.h" />
     <ClInclude Include="src\Renderer\Texture.h" />
+    <ClInclude Include="src\Util\GLFWLoad.h" />
     <ClInclude Include="src\Util\Helpers.h" />
     <ClInclude Include="src\Renderer\Uniform.h" />
     <ClInclude Include="src\Renderer\VertexArray.h" />
