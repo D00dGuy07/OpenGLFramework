@@ -15,13 +15,13 @@ extern "C" {
 int main(void)
 {
 	// Load OpenGL/GLFW
-	GLFWwindow* window = LoadGLFW();
+	GLFWwindow* window = LoadGLFW(1280, 720);
 
 	if (window == NULL)
 		return -1;
 
 	// Run application
-	Demo* demo = new PostProcessQuad(window);
+	Demo* demo = new ComputeTexture(window);
 	demo->run();
     delete demo;
 

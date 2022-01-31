@@ -196,6 +196,9 @@
     <ClInclude Include="src\Renderer\Shader.h" />
     <ClInclude Include="src\Renderer\ShaderBase.h" />
     <ClInclude Include="src\Renderer\Texture.h" />
+    <ClInclude Include="src\Util\Events\CallbackList.h" />
+    <ClInclude Include="src\Util\Events\EventConnection.h" />
+    <ClInclude Include="src\Util\Events\EventQueue.h" />
     <ClInclude Include="src\Util\GLFWLoad.h" />
     <ClInclude Include="src\Util\Helpers.h" />
     <ClInclude Include="src\Renderer\Uniform.h" />
@@ -203,6 +206,8 @@
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\Renderer\VertexBufferLayout.h" />
     <ClInclude Include="src\Util\GLFWEventWrapper.h" />
+    <ClInclude Include="src\Util\Ref.h" />
+    <ClInclude Include="src\Util\Timer.h" />
     <ClInclude Include="vendor\glm\common.hpp" />
     <ClInclude Include="vendor\glm\detail\compute_common.hpp" />
     <ClInclude Include="vendor\glm\detail\compute_vector_relational.hpp" />
