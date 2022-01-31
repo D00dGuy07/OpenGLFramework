@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Renderer/Renderer.h"
 #include "Renderer/Uniform.h"
 
 #include "glm/glm.hpp"
@@ -165,7 +166,9 @@ protected:
 	{
 		if (!cache)
 		{
-			uniformType(value).Set(GetUniformLocation(name));
+			Renderer::Submit([=]() {
+				uniformType(value).Set(GetUniformLocation(name));
+			});
 			return;
 		}
 
