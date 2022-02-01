@@ -24,14 +24,14 @@ ComputeTexture::ComputeTexture(GLFWwindow* window)
 {
 	// Load/Compile and initialize shaders
 
-	//if (FileHelpers::FileExists("res/ComputeTexture/Render.shaderbin"))
-	//	m_RenderShader = new Shader("res/ComputeTexture/Render.shaderbin", true);
-	//else
+	if (FileHelpers::FileExists("res/ComputeTexture/Render.shaderbin"))
+		m_RenderShader = new Shader("res/ComputeTexture/Render.shaderbin", true);
+	else
 		m_RenderShader = new Shader("res/ComputeTexture/Render.shader", false);
 
-	//if (FileHelpers::FileExists("res/ComputeTexture/Texture.shaderbin"))
-	//	m_TextureShader = new ComputeShader("res/ComputeTexture/Texture.shaderbin", true);
-	//else
+	if (FileHelpers::FileExists("res/ComputeTexture/Texture.shaderbin"))
+		m_TextureShader = new ComputeShader("res/ComputeTexture/Texture.shaderbin", true);
+	else
 		m_TextureShader = new ComputeShader("res/ComputeTexture/Texture.shader", false);
 
 	m_Texture->Bind();
@@ -99,8 +99,6 @@ void ComputeTexture::Resize(const int& width, const int& height)
 
 void ComputeTexture::Draw()
 {
-	m_TextureShader->Dispatch(256, 256, 1);
-	GLMemoryHelper::Barrier(GLMemoryHelper::BarrierType::ShaderImgAccess);
 	// Nothing special happening in here
 	Renderer::Clear();
 	Renderer::SubmitMesh(*m_SquareMesh, *m_RenderShader);

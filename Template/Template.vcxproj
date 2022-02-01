@@ -78,9 +78,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <ExtensionsToDeleteOnClean>*.cdf;*.cache;*.obj;*.obj.enc;*.ilk;*.ipdb;*.iobj;*.resources;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.pgc;*.pgd;*.meta;*.tlog;*.manifest;*.res;*.pch;*.exp;*.idb;*.rep;*.xdc;*.pdb;*_manifest.rc;*.bsc;*.sbr;*.xml;*.metagen;*.bi</ExtensionsToDeleteOnClean>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <ExtensionsToDeleteOnClean>*.cdf;*.cache;*.obj;*.obj.enc;*.ilk;*.ipdb;*.iobj;*.resources;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.pgc;*.pgd;*.meta;*.tlog;*.manifest;*.res;*.pch;*.exp;*.idb;*.rep;*.xdc;*.pdb;*_manifest.rc;*.bsc;*.sbr;*.xml;*.metagen;*.bi</ExtensionsToDeleteOnClean>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -157,10 +159,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Demos\ComputeTexture.cpp" />
+    <ClCompile Include="src\Demos\ComputeVertices.cpp" />
     <ClCompile Include="src\Demos\PostProcessQuad.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Renderer\ComputeShader.cpp" />
     <ClCompile Include="src\Renderer\Framebuffer.cpp" />
+    <ClCompile Include="src\Renderer\GLBuffer.cpp" />
     <ClCompile Include="src\Renderer\GLHelpers.cpp" />
     <ClCompile Include="src\Renderer\ImageBuffer.cpp" />
     <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
@@ -170,6 +174,7 @@
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
     <ClCompile Include="src\Renderer\ShaderBase.cpp" />
+    <ClCompile Include="src\Renderer\ShaderBuffer.cpp" />
     <ClCompile Include="src\Renderer\Texture.cpp" />
     <ClCompile Include="src\Util\GLFWLoad.cpp" />
     <ClCompile Include="src\Util\Helpers.cpp" />
@@ -183,9 +188,11 @@
   <ItemGroup>
     <ClInclude Include="src\Demo.h" />
     <ClInclude Include="src\Demos\ComputeTexture.h" />
+    <ClInclude Include="src\Demos\ComputeVertices.h" />
     <ClInclude Include="src\Demos\PostProcessQuad.h" />
     <ClInclude Include="src\Renderer\ComputeShader.h" />
     <ClInclude Include="src\Renderer\Framebuffer.h" />
+    <ClInclude Include="src\Renderer\GLBuffer.h" />
     <ClInclude Include="src\Renderer\GLHelpers.h" />
     <ClInclude Include="src\Renderer\ImageBuffer.h" />
     <ClInclude Include="src\Renderer\IndexBuffer.h" />
@@ -195,6 +202,7 @@
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Renderer\Shader.h" />
     <ClInclude Include="src\Renderer\ShaderBase.h" />
+    <ClInclude Include="src\Renderer\ShaderBuffer.h" />
     <ClInclude Include="src\Renderer\Texture.h" />
     <ClInclude Include="src\Util\Events\CallbackList.h" />
     <ClInclude Include="src\Util\Events\EventConnection.h" />
@@ -495,6 +503,8 @@
   <ItemGroup>
     <None Include="res\ComputeTexture\Render.shader" />
     <None Include="res\ComputeTexture\Texture.shader" />
+    <None Include="res\ComputeVertices\Render.shader" />
+    <None Include="res\ComputeVertices\Vertices.shader" />
     <None Include="res\PostProcessQuad\Square.shader" />
     <None Include="res\PostProcessQuad\PostProcessing.shader" />
     <None Include="vendor\glm\detail\func_common.inl" />

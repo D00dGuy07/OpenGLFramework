@@ -84,6 +84,15 @@
     <ClCompile Include="src\Util\GLFWLoad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\GLBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Demos\ComputeVertices.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\ShaderBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\IndexBuffer.h">
@@ -1016,6 +1025,15 @@
     <ClInclude Include="src\Util\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\GLBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Demos\ComputeVertices.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\ShaderBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\glm\detail\func_common.inl">
@@ -1430,5 +1448,7 @@
     <None Include="res\PostProcessQuad\PostProcessing.shader" />
     <None Include="res\ComputeTexture\Render.shader" />
     <None Include="res\ComputeTexture\Texture.shader" />
+    <None Include="res\ComputeVertices\Render.shader" />
+    <None Include="res\ComputeVertices\Vertices.shader" />
   </ItemGroup>
 </Project>

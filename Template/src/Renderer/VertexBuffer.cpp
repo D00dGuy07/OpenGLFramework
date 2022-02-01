@@ -5,12 +5,10 @@
 
 uint32_t VertexBuffer::m_BoundRendererID = 0xFFFFFFFF;
 
-VertexBuffer::VertexBuffer(const void* data, uint32_t size)
+VertexBuffer::VertexBuffer(const void* data, size_t size)
+	: GLBuffer()
 {
-	// Not wrapped in submit because it copies from a data buffer with an unknown memory lifespan
-	glGenBuffers(1, &m_RendererID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+	SetContents(data, size, Target::ArrayBuffer, Usage::StaticDraw);
 }
 
 VertexBuffer::~VertexBuffer()

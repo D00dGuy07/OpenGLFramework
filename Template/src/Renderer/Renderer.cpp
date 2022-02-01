@@ -18,7 +18,7 @@ void Renderer::SubmitMesh(Mesh& mesh, Shader& shader)
 	mesh.m_VertexArray->Bind();
 	mesh.m_IndexBuffer->Bind();
 
-	unsigned int indicesCount = mesh.GetNumIndices();
+	uint32_t indicesCount = mesh.GetNumIndices();
 	Submit([indicesCount]() mutable {
 		glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, nullptr);
 	});

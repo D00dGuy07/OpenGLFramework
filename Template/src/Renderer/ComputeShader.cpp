@@ -36,6 +36,9 @@ std::string ComputeShader::LoadShaderFile()
 {
 	std::ifstream file(m_FilePath);
 
+	if (!file.good())
+		std::cout << "[Compute Shader Compilation] Failed to open file " << m_FilePath << "\n";
+
 	std::string line;
 	std::stringstream stream;
 	bool foundTag = false;

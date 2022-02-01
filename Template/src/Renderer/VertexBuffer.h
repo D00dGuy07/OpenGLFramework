@@ -1,15 +1,14 @@
 #pragma once
-#include <stdint.h>
 
-class VertexBuffer
+#include "Renderer/GLBuffer.h"
+
+class VertexBuffer : public GLBuffer
 {
 public:
-	VertexBuffer(const void* data, uint32_t size);
-	~VertexBuffer();
+	VertexBuffer(const void* data, size_t size);
+	virtual ~VertexBuffer();
 
-	void Bind() const;
+	virtual void Bind() const override;
 private:
-	uint32_t m_RendererID;
-
 	static uint32_t m_BoundRendererID;
 };

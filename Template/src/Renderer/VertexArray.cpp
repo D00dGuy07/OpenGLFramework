@@ -31,15 +31,15 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 	Bind();
 	vb.Bind();
 	const auto& elements = layout.GetElements();
-	unsigned int offset = 0;
-	for (unsigned int i = 0; i < elements.size(); i++)
+	uint64_t offset = 0;
+	for (uint32_t i = 0; i < elements.size(); i++)
 	{
 		const auto& element = elements[i];
-		unsigned int stride = layout.GetStride();
+		uint32_t stride = layout.GetStride();
 		Renderer::Submit([=]() {
 			glEnableVertexAttribArray(i);
 			glVertexAttribPointer(i, element.count, element.type,
-				element.normalized, stride, (const void*)offset);
+				element.normalized, stride, reinterpret_cast<const void*>(offset));
 		});
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
 	}

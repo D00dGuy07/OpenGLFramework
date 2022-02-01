@@ -1,18 +1,16 @@
 #pragma once
-#include <stdint.h>
 
-class IndexBuffer
+#include "Renderer/GLBuffer.h"
+
+class IndexBuffer : public GLBuffer
 {
 public:
 	IndexBuffer(const uint32_t* data, uint32_t count);
-	~IndexBuffer();
+	virtual ~IndexBuffer();
 
-	void Bind() const;
+	virtual void Bind() const override;
 
-	inline uint32_t GetCount() const { return m_Count; }
+	inline size_t GetCount() const { return m_Size / sizeof(uint32_t); }
 private:
-	uint32_t m_RendererID;
-	uint32_t m_Count;
-
 	static uint32_t m_BoundRendererID;
 };

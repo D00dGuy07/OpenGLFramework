@@ -16,7 +16,7 @@ public:
 
 	void Construct();
 
-	unsigned int GetNumIndices() const;
+	uint32_t GetNumIndices() const;
 	VertexArray* GetVertexArray() const { return m_VertexArray; }
 	VertexBuffer* GetVertexBuffer() const { return m_VertexBuffer; }
 	IndexBuffer* GetIndexBuffer() const { return m_IndexBuffer; }
