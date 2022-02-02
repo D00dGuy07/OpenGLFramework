@@ -32,7 +32,7 @@ ShaderBuffer::~ShaderBuffer()
 void ShaderBuffer::Bind() const
 {
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == m_RendererID)
+		if (m_Target == GLBuffer::Target::ShaderStorage && m_BoundRendererID == m_RendererID)
 			return;
 		m_BoundRendererID = m_RendererID;
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_RendererID);
@@ -52,12 +52,9 @@ void ShaderBuffer::BindIndexed(uint32_t index) const
 
 	Bind();
 	Renderer::Submit([=]() {
-		if (m_Target == GLBuffer::Target::ShaderStorage)
-		{
-			if (m_BoundIndexedTargets[index] == m_RendererID)
-				return;
-			m_BoundIndexedTargets[index] = m_RendererID;
-		}
+		if (m_Target == GLBuffer::Target::ShaderStorage && m_BoundIndexedTargets[index] == m_RendererID)
+			return;
+		m_BoundIndexedTargets[index] = m_RendererID;
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, index, m_RendererID);
 	});
 }
