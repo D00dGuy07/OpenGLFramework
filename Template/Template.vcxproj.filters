@@ -93,6 +93,12 @@
     <ClCompile Include="src\Renderer\ShaderBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Demos\InstancedCube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Common\FlyCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\IndexBuffer.h">
@@ -1034,6 +1040,12 @@
     <ClInclude Include="src\Renderer\ShaderBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Demos\InstancedCube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Common\FlyCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\glm\detail\func_common.inl">
@@ -1450,5 +1462,6 @@
     <None Include="res\ComputeTexture\Texture.shader" />
     <None Include="res\ComputeVertices\Render.shader" />
     <None Include="res\ComputeVertices\Vertices.shader" />
+    <None Include="res\InstancedCube\Render.shader" />
   </ItemGroup>
 </Project>

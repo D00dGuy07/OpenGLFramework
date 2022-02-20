@@ -19,6 +19,7 @@ public:
 	Ref<EventConnection<GLFWwindow*, double, double>> ConnectMouseCursorPos(std::function<void(GLFWwindow*, double, double)> callback);
 	Ref<EventConnection<GLFWwindow*, int>> ConnectMouseCursorEnter(std::function<void(GLFWwindow*, int)> callback);
 	Ref<EventConnection<GLFWwindow*, double, double>> ConnectMouseScroll(std::function<void(GLFWwindow*, double, double)> callback);
+	Ref<EventConnection<GLFWwindow*, int, int, int, int>> ConnectKey(std::function<void(GLFWwindow*, int, int, int, int)> callback);
 	Ref<EventConnection<GLFWwindow*, unsigned int>> ConnectChar(std::function<void(GLFWwindow*, unsigned int)> callback);
 	Ref<EventConnection<GLFWwindow*, unsigned int, int>> ConnectCharMods(std::function<void(GLFWwindow*, unsigned int, int)> callback);
 	Ref<EventConnection<GLFWwindow*, int, const char*[]>> ConnectPathDrop(std::function<void(GLFWwindow*, int, const char*[])> callback);
@@ -43,6 +44,7 @@ private:
 	static void MouseCursorPosCallback(GLFWwindow* window, double xpos, double ypos);
 	static void MouseCursorEnterCallback(GLFWwindow* window, int entered);
 	static void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void CharCallback(GLFWwindow* window, unsigned int codepoint);
 	static void CharModsCallback(GLFWwindow* window, unsigned int codepoint, int mods);
 	static void PathDropCallback(GLFWwindow* window, int path_count, const char* paths[]);
@@ -65,6 +67,7 @@ private:
 	CallbackList<GLFWwindow*, double, double> m_MouseCursorPosCallbacks;
 	CallbackList<GLFWwindow*, int> m_MouseCursorEnterCallbacks;
 	CallbackList<GLFWwindow*, double, double> m_MouseScrollCallbacks;
+	CallbackList<GLFWwindow*, int, int, int, int> m_KeyCallbacks;
 	CallbackList<GLFWwindow*, unsigned int> m_CharCallbacks;
 	CallbackList<GLFWwindow*, unsigned int, int> m_CharModsCallbacks;
 	CallbackList<GLFWwindow*, int, const char*[]> m_PathDropCallbacks;

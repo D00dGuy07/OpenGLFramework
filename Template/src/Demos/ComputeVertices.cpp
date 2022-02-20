@@ -1,4 +1,4 @@
-#include "ComputeVertices.h"
+#include "Demos/ComputeVertices.h"
 
 // Renderer Includes
 #include "Renderer/Renderer.h"
@@ -33,14 +33,14 @@ ComputeVertices::ComputeVertices(GLFWwindow* window)
 {
 	// Load/Compile and initialize shaders
 
-	//if (FileHelpers::FileExists("res/ComputeVertices/Render.shaderbin"))
-	//	m_RenderShader = new Shader("res/ComputeTexture/Render.shaderbin", true);
-	//else
+	if (FileHelpers::FileExists("res/ComputeVertices/Render.shaderbin"))
+		m_RenderShader = new Shader("res/ComputeVertices/Render.shaderbin", true);
+	else
 	m_RenderShader = new Shader("res/ComputeVertices/Render.shader", false);
 
-	//if (FileHelpers::FileExists("res/ComputeVertices/Vertices.shaderbin"))
-	//	m_TextureShader = new ComputeShader("res/ComputeTexture/Vertices.shaderbin", true);
-	//else
+	if (FileHelpers::FileExists("res/ComputeVertices/Vertices.shaderbin"))
+		m_VerticesShader = new ComputeShader("res/ComputeVertices/Vertices.shaderbin", true);
+	else
 	m_VerticesShader = new ComputeShader("res/ComputeVertices/Vertices.shader", false);
 
 	m_RenderShader->SetUniformMatrix4f("u_Proj", m_Projection);

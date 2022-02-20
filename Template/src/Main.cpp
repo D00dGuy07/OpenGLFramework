@@ -6,6 +6,7 @@
 #include "Demos/PostProcessQuad.h"
 #include "Demos/ComputeTexture.h"
 #include "Demos/ComputeVertices.h"
+#include "Demos/InstancedCube.h"
 
 // Enable Nvidia high performace graphics
 #include <windows.h>
@@ -22,7 +23,7 @@ int main(void)
 		return -1;
 
 	// Run application
-	Demo* demo = new ComputeVertices(window);
+	Demo* demo = new InstancedCube(window);
 	demo->run();
     delete demo;
 

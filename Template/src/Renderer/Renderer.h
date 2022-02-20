@@ -25,6 +25,7 @@ public:
 	}
 
 	static void SubmitMesh(Mesh& mesh, Shader& shader);
+	static void SubmitMeshInstanced(Mesh& mesh, Shader& shader, uint32_t instanceCount);
 
 	static void Clear();
 	static void DrawFrame();

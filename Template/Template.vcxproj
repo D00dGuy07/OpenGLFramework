@@ -158,8 +158,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Common\FlyCamera.cpp" />
     <ClCompile Include="src\Demos\ComputeTexture.cpp" />
     <ClCompile Include="src\Demos\ComputeVertices.cpp" />
+    <ClCompile Include="src\Demos\InstancedCube.cpp" />
     <ClCompile Include="src\Demos\PostProcessQuad.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Renderer\ComputeShader.cpp" />
@@ -186,9 +188,11 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Common\FlyCamera.h" />
     <ClInclude Include="src\Demo.h" />
     <ClInclude Include="src\Demos\ComputeTexture.h" />
     <ClInclude Include="src\Demos\ComputeVertices.h" />
+    <ClInclude Include="src\Demos\InstancedCube.h" />
     <ClInclude Include="src\Demos\PostProcessQuad.h" />
     <ClInclude Include="src\Renderer\ComputeShader.h" />
     <ClInclude Include="src\Renderer\Framebuffer.h" />
@@ -505,6 +509,7 @@
     <None Include="res\ComputeTexture\Texture.shader" />
     <None Include="res\ComputeVertices\Render.shader" />
     <None Include="res\ComputeVertices\Vertices.shader" />
+    <None Include="res\InstancedCube\Render.shader" />
     <None Include="res\PostProcessQuad\Square.shader" />
     <None Include="res\PostProcessQuad\PostProcessing.shader" />
     <None Include="vendor\glm\detail\func_common.inl" />

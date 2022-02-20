@@ -1,6 +1,8 @@
 # OpenGLFramework
-This is my OpenGL rendering framework. It has a few demos for testing included. Whenever I implement a new big feature, I usually create a new test demo as well. ComputeVertices is the latest one. Here is a list:
+This is my OpenGL rendering framework. It has a few demos for testing included. Whenever I implement a new big feature, I usually create a new test demo as well. InstancedCube is the latest one. Here is a list:
 
+* InstancedCube
+	* A 3D scene where you can fly around in an area with over one million colored cubes
 * ComputeVertices
 	* A plane with variable resolution and every frame, a compute shader moves around the vertices with a simplex noise function.
 * ComputeTexture

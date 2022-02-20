@@ -28,6 +28,7 @@ GLFWEventWrapper::GLFWEventWrapper(GLFWwindow* window)
 	glfwSetCursorPosCallback(window, GLFWEventWrapper::MouseCursorPosCallback);
 	glfwSetCursorEnterCallback(window, GLFWEventWrapper::MouseCursorEnterCallback);
 	glfwSetScrollCallback(window, GLFWEventWrapper::MouseScrollCallback);
+	glfwSetKeyCallback(window, GLFWEventWrapper::KeyCallback);
 	glfwSetCharCallback(window, GLFWEventWrapper::CharCallback);
 	glfwSetCharModsCallback(window, GLFWEventWrapper::CharModsCallback);
 	glfwSetDropCallback(window, GLFWEventWrapper::PathDropCallback);
@@ -53,6 +54,7 @@ void GLFWEventWrapper::DisposeWrapper(GLFWwindow* window)
 		glfwSetCursorPosCallback(window, NULL);
 		glfwSetCursorEnterCallback(window, NULL);
 		glfwSetScrollCallback(window, NULL);
+		glfwSetKeyCallback(window, NULL);
 		glfwSetCharCallback(window, NULL);
 		glfwSetCharModsCallback(window, NULL);
 		glfwSetDropCallback(window, NULL);
@@ -112,6 +114,17 @@ Ref<EventConnection<GLFWwindow*, double, double>> GLFWEventWrapper::ConnectMouse
 void GLFWEventWrapper::MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	GetWrapper(window)->m_MouseScrollCallbacks.Call(window, xoffset, yoffset);
+}
+
+
+Ref<EventConnection<GLFWwindow*, int, int, int, int>> GLFWEventWrapper::ConnectKey(std::function<std::remove_pointer<GLFWkeyfun>::type> callback)
+{
+	return m_KeyCallbacks.Connect(callback);
+}
+
+void GLFWEventWrapper::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	GetWrapper(window)->m_KeyCallbacks.Call(window, key, scancode, action, mods);
 }
 
 

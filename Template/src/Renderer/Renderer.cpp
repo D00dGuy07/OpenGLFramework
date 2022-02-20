@@ -24,6 +24,24 @@ void Renderer::SubmitMesh(Mesh& mesh, Shader& shader)
 	});
 }
 
+void Renderer::SubmitMeshInstanced(Mesh& mesh, Shader& shader, uint32_t instanceCount)
+{
+	if (mesh.m_VertexBuffer == NULL || mesh.m_IndexBuffer == NULL)
+		return;
+
+	if (mesh.m_VertexArray == NULL)
+		mesh.Construct();
+
+	shader.Bind();
+	mesh.m_VertexArray->Bind();
+	mesh.m_IndexBuffer->Bind();
+
+	uint32_t indicesCount = mesh.GetNumIndices();
+	Submit([indicesCount, instanceCount]() mutable {
+		glDrawElementsInstanced(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, nullptr, instanceCount);
+	});
+}
+
 void Renderer::Clear()
 {
 	Submit([]() {
