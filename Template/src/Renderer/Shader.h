@@ -12,6 +12,7 @@ class Shader : public ShaderBase
 {
 public:
 	Shader(const std::string& filepath, bool binary);
+	Shader(const std::string& vertex, const std::string& fragment);
 
 private:
 	std::string m_FilePath;

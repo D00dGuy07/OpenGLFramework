@@ -6,6 +6,7 @@
 
 #include <unordered_map>
 #include <vector>
+#include <fstream>
 
 struct ShaderBinary
 {
@@ -18,7 +19,9 @@ struct ShaderBinary
 	void Free();
 
 	void WriteFile(const std::string& filePath);
+	void WriteStream(std::ostream& stream);
 	static ShaderBinary LoadFile(const std::string& filePath);
+	static ShaderBinary LoadStream(std::istream& stream);
 };
 
 // ShaderBase class contains functions shared by compute

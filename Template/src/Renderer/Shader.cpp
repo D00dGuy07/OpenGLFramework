@@ -29,6 +29,14 @@ Shader::Shader(const std::string& filepath, bool binary)
 	}
 }
 
+Shader::Shader(const std::string& vertex, const std::string& fragment)
+	: m_FilePath("No Filepath")
+{
+	Renderer::Submit([&, vertex, fragment]() {
+		m_RendererID = CreateShader(vertex, fragment);
+	});
+}
+
 ShaderProgramSource Shader::ParseShader(const std::string& filePath)
 {
 	std::ifstream stream(filePath);

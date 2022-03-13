@@ -41,11 +41,17 @@ void ShaderBinary::WriteFile(const std::string& filePath)
 	if (!file.good())
 		return;
 
-	// I'm not sure if reordering for little/big endian is important here
-	file.write(reinterpret_cast<char*>(&Length), sizeof(int32_t));
-	file.write(reinterpret_cast<char*>(&Format), sizeof(uint32_t));
-	file.write(reinterpret_cast<char*>(Data), Length);
+	WriteStream(file);
+
 	file.close();
+}
+
+void ShaderBinary::WriteStream(std::ostream& stream)
+{
+	// I'm not sure if reordering for little/big endian is important here
+	stream.write(reinterpret_cast<char*>(&Length), sizeof(int32_t));
+	stream.write(reinterpret_cast<char*>(&Format), sizeof(uint32_t));
+	stream.write(reinterpret_cast<char*>(Data), Length);
 }
 
 ShaderBinary ShaderBinary::LoadFile(const std::string& filePath)
@@ -56,14 +62,21 @@ ShaderBinary ShaderBinary::LoadFile(const std::string& filePath)
 	if (!file.good())
 		return { 0, 0, NULL };
 
-	ShaderBinary binary = { 0, 0, NULL };
-	file.read(reinterpret_cast<char*>(&binary.Length), sizeof(int32_t));
-	file.read(reinterpret_cast<char*>(&binary.Format), sizeof(uint32_t));
-
-	binary.Data = static_cast<uint8_t*>(malloc(static_cast<size_t>(binary.Length)));
-	file.read(reinterpret_cast<char*>(binary.Data), binary.Length);
+	ShaderBinary binary = LoadStream(file);
 
 	file.close();
+	return binary;
+}
+
+ShaderBinary ShaderBinary::LoadStream(std::istream& stream)
+{
+	ShaderBinary binary = { 0, 0, NULL };
+	stream.read(reinterpret_cast<char*>(&binary.Length), sizeof(int32_t));
+	stream.read(reinterpret_cast<char*>(&binary.Format), sizeof(uint32_t));
+
+	binary.Data = static_cast<uint8_t*>(malloc(static_cast<size_t>(binary.Length)));
+	stream.read(reinterpret_cast<char*>(binary.Data), binary.Length);
+
 	return binary;
 }
 
