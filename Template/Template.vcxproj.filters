@@ -99,6 +99,9 @@
     <ClCompile Include="src\Common\FlyCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Util\GarbageHeap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\IndexBuffer.h">
@@ -1047,6 +1050,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Util\Sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\GarbageHeap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

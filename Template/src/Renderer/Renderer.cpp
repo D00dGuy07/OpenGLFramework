@@ -5,6 +5,7 @@
 #include "Renderer/Framebuffer.h"
 
 RenderCommandQueue Renderer::m_CommandQueue = RenderCommandQueue();
+GarbageHeap Renderer::m_GarbageHeap = GarbageHeap(1024 * 512);
 
 void Renderer::SubmitMesh(Mesh& mesh, Shader& shader)
 {
@@ -52,4 +53,5 @@ void Renderer::Clear()
 void Renderer::DrawFrame()
 {
 	m_CommandQueue.Execute();
+	m_GarbageHeap.CleanupGarbage();
 }

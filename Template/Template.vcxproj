@@ -178,6 +178,7 @@
     <ClCompile Include="src\Renderer\ShaderBase.cpp" />
     <ClCompile Include="src\Renderer\ShaderBuffer.cpp" />
     <ClCompile Include="src\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Util\GarbageHeap.cpp" />
     <ClCompile Include="src\Util\GLFWLoad.cpp" />
     <ClCompile Include="src\Util\Helpers.cpp" />
     <ClCompile Include="src\Renderer\Uniform.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="src\Util\Events\CallbackList.h" />
     <ClInclude Include="src\Util\Events\EventConnection.h" />
     <ClInclude Include="src\Util\Events\EventQueue.h" />
+    <ClInclude Include="src\Util\GarbageHeap.h" />
     <ClInclude Include="src\Util\GLFWLoad.h" />
     <ClInclude Include="src\Util\Helpers.h" />
     <ClInclude Include="src\Renderer\Uniform.h" />

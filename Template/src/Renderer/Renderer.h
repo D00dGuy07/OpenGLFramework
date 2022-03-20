@@ -8,6 +8,8 @@
 #include "Renderer/Mesh.h"
 #include "Renderer/Shader.h"
 
+#include "Util/GarbageHeap.h"
+
 class Renderer
 {
 public:
@@ -30,6 +32,13 @@ public:
 	static void Clear();
 	static void DrawFrame();
 
+	template<typename T, typename... Args>
+	static T* CreateGarbage(Args&&... args)
+	{
+		return new(m_GarbageHeap.Allocate<T>()) T(std::forward<Args>(args)...);
+	}
+
 private:
 	static RenderCommandQueue m_CommandQueue;
+	static GarbageHeap m_GarbageHeap;
 };
