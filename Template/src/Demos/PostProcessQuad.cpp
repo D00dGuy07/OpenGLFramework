@@ -58,7 +58,7 @@ PostProcessQuad::PostProcessQuad(GLFWwindow* window)
 	m_SquareMesh->BufferLayout.Push<float>(3);
 	m_SquareMesh->Construct();
 
-	m_SquareShader->SetUniformMatrix4f("u_Proj", m_Projection);
+	m_SquareShader->SetUniformMatrix4fv("u_Proj", &m_Projection, 1);
 
 	// Build framebuffer
 
@@ -121,7 +121,7 @@ void PostProcessQuad::Resize(const int& width, const int& height)
 	else if (height == width)
 		m_Projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
 
-	m_SquareShader->SetUniformMatrix4f("u_Proj", m_Projection);
+	m_SquareShader->SetUniformMatrix4fv("u_Proj", &m_Projection, 1);
 
 	// Draw here because event polling hangs the render loop
 	Draw();

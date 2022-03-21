@@ -27,9 +27,9 @@ InstancedCube::InstancedCube(GLFWwindow* window)
 {
 	// Load/Compile and initialize shaders
 
-	//if (FileHelpers::FileExists("res/InstancedCube/Render.shaderbin"))
-	//	m_RenderShader = new Shader("res/InstancedCube/Render.shaderbin", true);
-	//else
+	if (FileHelpers::FileExists("res/InstancedCube/Render.shaderbin"))
+		m_RenderShader = new Shader("res/InstancedCube/Render.shaderbin", true);
+	else
 	m_RenderShader = new Shader("res/InstancedCube/Render.shader", false);
 
 	// Construct mesh
@@ -120,7 +120,8 @@ void InstancedCube::Draw()
 	Renderer::Clear();
 
 	m_Camera.UpdateTransform();
-	m_RenderShader->SetUniformMatrix4f("u_Proj", m_Camera.GetMatrix());
+	glm::mat4 matrix = m_Camera.GetMatrix();
+	m_RenderShader->SetUniformMatrix4fv("u_Proj", &matrix, 1);
 	
 	Renderer::SubmitMeshInstanced(*m_CubeMesh, *m_RenderShader, Resolution * Resolution * Resolution);
 	//Renderer::SubmitMesh(*m_CubeMesh, *m_RenderShader);

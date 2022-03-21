@@ -23,7 +23,7 @@ int main(void)
 		return -1;
 
 	// Run application
-	Demo* demo = new ComputeVertices(window);
+	Demo* demo = new InstancedCube(window);
 	demo->run();
     delete demo;
 

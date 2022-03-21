@@ -72,7 +72,7 @@ namespace Sorting
 
 		for (int32_t j = begin; j < end; j++)
 		{
-			if (compare(pivot + 1, data[j]))
+			if (compare(pivot, data[j]))
 			{
 				i++;
 				t temp = data[i];

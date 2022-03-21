@@ -1,6 +1,7 @@
 #pragma once
 
 #include "glm/glm.hpp"
+#include "glad/glad.h"
 
 #include <stdint.h>
 #include <vector>
@@ -16,386 +17,195 @@ public:
 	virtual void Set(int32_t location) = 0;
 };
 
+// Uniform templates
 
-// Standard Vector Types
+template<typename T, typename FType, FType func, uint32_t count>
+class UniformSingle;
 
-
-//		Float types
-
-class Uniform1f : public Uniform
+template<typename T, typename FType, FType func>
+class UniformSingle<T, FType, func, 1> : public Uniform
 {
 public:
-	Uniform1f(float value);
-	virtual ~Uniform1f() override {}
+	UniformSingle(T value)
+		: m_Value(value) {}
+	virtual ~UniformSingle() override {}
 
-	virtual void Set(int32_t location) override;
+	virtual void Set(int32_t location) override
+	{
+		(*func)(location, m_Value);
+	}
 private:
-	float m_Value;
+	T m_Value;
 };
 
-class Uniform2f : public Uniform
+template<typename T, typename FType, FType func>
+class UniformSingle<T, FType, func, 2> : public Uniform
 {
 public:
-	Uniform2f(glm::vec2 value);
-	virtual ~Uniform2f() override {}
+	UniformSingle(T value)
+		: m_Value(value) {}
+	virtual ~UniformSingle() override {}
 
-	virtual void Set(int32_t location) override;
+	virtual void Set(int32_t location) override
+	{
+		(*func)(location, m_Value.x, m_Value.y);
+	}
 private:
-	glm::vec2 m_Value;
+	T m_Value;
 };
 
-class Uniform3f : public Uniform
+template<typename T, typename FType, FType func>
+class UniformSingle<T, FType, func, 3> : public Uniform
 {
 public:
-	Uniform3f(glm::vec3 value);
-	virtual ~Uniform3f() override {}
+	UniformSingle(T value)
+		: m_Value(value) {}
+	virtual ~UniformSingle() override {}
 
-	virtual void Set(int32_t location) override;
+	virtual void Set(int32_t location) override
+	{
+		(*func)(location, m_Value.x, m_Value.y, m_Value.z);
+	}
 private:
-	glm::vec3 m_Value;
+	T m_Value;
 };
 
-class Uniform4f : public Uniform
+template<typename T, typename FType, FType func>
+class UniformSingle<T, FType, func, 4> : public Uniform
 {
 public:
-	Uniform4f(glm::vec4 value);
-	virtual ~Uniform4f() override {}
+	UniformSingle(T value)
+		: m_Value(value) {}
+	virtual ~UniformSingle() override {}
 
-	virtual void Set(int32_t location) override;
+	virtual void Set(int32_t location) override
+	{
+		(*func)(location, m_Value.x, m_Value.y, m_Value.z, m_Value.w);
+	}
 private:
-	glm::vec4 m_Value;
+	T m_Value;
 };
 
-//		Integer types
-
-class Uniform1i : public Uniform
+template<typename T, typename DestT, typename FType, FType func>
+class UniformArray : public Uniform
 {
 public:
-	Uniform1i(int32_t value);
-	virtual ~Uniform1i() override {}
+	UniformArray(const T* values, uint32_t count)
+		: m_Values(reinterpret_cast<T*>(malloc(static_cast<size_t>(count) * sizeof(T)))), m_Count(count)
+	{
+		if (m_Values != NULL)
+			memcpy(m_Values, values, static_cast<size_t>(count) * sizeof(T));
+	}
+	virtual ~UniformArray() override { free(m_Values); }
 
-	virtual void Set(int32_t location) override;
+	virtual void Set(int32_t location) override
+	{
+		(*func)(location, static_cast<int32_t>(m_Count), reinterpret_cast<DestT*>(m_Values));
+	}
 private:
-	int32_t m_Value;
+	T* m_Values;
+	uint32_t m_Count;
 };
 
-class Uniform2i : public Uniform
+template<typename T, typename FType, FType func>
+class UniformMatrix : public Uniform
 {
 public:
-	Uniform2i(glm::ivec2 value);
-	virtual ~Uniform2i() override {}
+	UniformMatrix(const T* values, uint32_t count)
+		: m_Values(reinterpret_cast<T*>(malloc(static_cast<size_t>(count) * sizeof(T)))), m_Count(count)
+	{
+		if (m_Values != NULL)
+			memcpy(m_Values, values, static_cast<size_t>(count) * sizeof(T));
+	}
+	virtual ~UniformMatrix() override { free(m_Values); }
 
-	virtual void Set(int32_t location) override;
+	virtual void Set(int32_t location) override
+	{
+		(*func)(location, static_cast<int32_t>(m_Count), GL_FALSE, reinterpret_cast<float*>(m_Values));
+	}
 private:
-	glm::ivec2 m_Value;
+	T* m_Values;
+	uint32_t m_Count;
 };
 
-class Uniform3i : public Uniform
-{
-public:
-	Uniform3i(glm::ivec3 value);
-	virtual ~Uniform3i() override {}
+typedef UniformSingle<float, decltype(glUniform1f)*, &glUniform1f, 1> Uniform1f;
+typedef UniformSingle<glm::vec2, decltype(glUniform2f)*, &glUniform2f, 2> Uniform2f;
+typedef UniformSingle<glm::vec3, decltype(glUniform3f)*, &glUniform3f, 3> Uniform3f;
+typedef UniformSingle<glm::vec4, decltype(glUniform4f)*, &glUniform4f, 4> Uniform4f;
 
-	virtual void Set(int32_t location) override;
-private:
-	glm::ivec3 m_Value;
-};
+typedef UniformSingle<int32_t, decltype(glUniform1i)*, &glUniform1i, 1> Uniform1i;
+typedef UniformSingle<glm::ivec2, decltype(glUniform2i)*, &glUniform2i, 2> Uniform2i;
+typedef UniformSingle<glm::ivec3, decltype(glUniform3i)*, &glUniform3i, 3> Uniform3i;
+typedef UniformSingle<glm::ivec4, decltype(glUniform4i)*, &glUniform4i, 4> Uniform4i;
 
-class Uniform4i : public Uniform
-{
-public:
-	Uniform4i(glm::ivec4 value);
-	virtual ~Uniform4i() override {}
+typedef UniformSingle<uint32_t, decltype(glUniform1ui)*, &glUniform1ui, 1> Uniform1ui;
+typedef UniformSingle<glm::uvec2, decltype(glUniform2ui)*, &glUniform2ui, 2> Uniform2ui;
+typedef UniformSingle<glm::uvec3, decltype(glUniform3ui)*, &glUniform3ui, 3> Uniform3ui;
+typedef UniformSingle<glm::uvec4, decltype(glUniform4ui)*, &glUniform4ui, 4> Uniform4ui;
 
-	virtual void Set(int32_t location) override;
-private:
-	glm::ivec4 m_Value;
-};
+typedef UniformArray<float, float, decltype(glUniform1fv)*, &glUniform1fv> Uniform1fv;
+typedef UniformArray<glm::vec2, float, decltype(glUniform2fv)*, &glUniform2fv> Uniform2fv;
+typedef UniformArray<glm::vec3, float, decltype(glUniform3fv)*, &glUniform3fv> Uniform3fv;
+typedef UniformArray<glm::vec4, float, decltype(glUniform4fv)*, &glUniform4fv> Uniform4fv;
 
-//		Unsigned integer types
+typedef UniformArray<int32_t, int32_t, decltype(glUniform1iv)*, &glUniform1iv> Uniform1iv;
+typedef UniformArray<glm::ivec2, int32_t, decltype(glUniform2iv)*, &glUniform2iv> Uniform2iv;
+typedef UniformArray<glm::ivec3, int32_t, decltype(glUniform3iv)*, &glUniform3iv> Uniform3iv;
+typedef UniformArray<glm::ivec4, int32_t, decltype(glUniform4iv)*, &glUniform4iv> Uniform4iv;
 
-class Uniform1ui : public Uniform
-{
-public:
-	Uniform1ui(uint32_t value);
-	virtual ~Uniform1ui() override {}
+typedef UniformArray<uint32_t, uint32_t, decltype(glUniform1uiv)*, &glUniform1uiv> Uniform1uiv;
+typedef UniformArray<glm::uvec2, uint32_t, decltype(glUniform2uiv)*, &glUniform2uiv> Uniform2uiv;
+typedef UniformArray<glm::uvec3, uint32_t, decltype(glUniform3uiv)*, &glUniform3uiv> Uniform3uiv;
+typedef UniformArray<glm::uvec4, uint32_t, decltype(glUniform4uiv)*, &glUniform4uiv> Uniform4uiv;
 
-	virtual void Set(int32_t location) override;
-private:
-	uint32_t m_Value;
-};
+typedef UniformMatrix<glm::mat2, decltype(glUniformMatrix2fv)*, &glUniformMatrix2fv> UniformMatrix2fv;
+typedef UniformMatrix<glm::mat3, decltype(glUniformMatrix3fv)*, &glUniformMatrix3fv> UniformMatrix3fv;
+typedef UniformMatrix<glm::mat4, decltype(glUniformMatrix4fv)*, &glUniformMatrix4fv> UniformMatrix4fv;
 
-class Uniform2ui : public Uniform
-{
-public:
-	Uniform2ui(glm::uvec2 value);
-	virtual ~Uniform2ui() override {}
+typedef UniformMatrix<glm::mat2x3, decltype(glUniformMatrix2x3fv)*, &glUniformMatrix2x3fv> UniformMatrix2x3fv;
+typedef UniformMatrix<glm::mat3x2, decltype(glUniformMatrix3x2fv)*, &glUniformMatrix3x2fv> UniformMatrix3x2fv;
+typedef UniformMatrix<glm::mat2x4, decltype(glUniformMatrix2x4fv)*, &glUniformMatrix2x4fv> UniformMatrix2x4fv;
+typedef UniformMatrix<glm::mat4x2, decltype(glUniformMatrix4x2fv)*, &glUniformMatrix4x2fv> UniformMatrix4x2fv;
+typedef UniformMatrix<glm::mat3x4, decltype(glUniformMatrix3x4fv)*, &glUniformMatrix3x4fv> UniformMatrix3x4fv;
+typedef UniformMatrix<glm::mat4x3, decltype(glUniformMatrix4x3fv)*, &glUniformMatrix4x3fv> UniformMatrix4x3fv;
 
-	virtual void Set(int32_t location) override;
-private:
-	glm::uvec2 m_Value;
-};
+extern template Uniform1f;
+extern template Uniform2f;
+extern template Uniform3f;
+extern template Uniform4f;
 
-class Uniform3ui : public Uniform
-{
-public:
-	Uniform3ui(glm::uvec3 value);
-	virtual ~Uniform3ui() override {}
+extern template Uniform1i;
+extern template Uniform2i;
+extern template Uniform3i;
+extern template Uniform4i;
 
-	virtual void Set(int32_t location) override;
-private:
-	glm::uvec3 m_Value;
-};
+extern template Uniform1ui;
+extern template Uniform2ui;
+extern template Uniform3ui;
+extern template Uniform4ui;
 
-class Uniform4ui : public Uniform
-{
-public:
-	Uniform4ui(glm::uvec4 value);
-	virtual ~Uniform4ui() override {}
+extern template Uniform1fv;
+extern template Uniform2fv;
+extern template Uniform3fv;
+extern template Uniform4fv;
 
-	virtual void Set(int32_t location) override;
-private:
-	glm::uvec4 m_Value;
-};
+extern template Uniform1iv;
+extern template Uniform2iv;
+extern template Uniform3iv;
+extern template Uniform4iv;
 
+extern template Uniform1uiv;
+extern template Uniform2uiv;
+extern template Uniform3uiv;
+extern template Uniform4uiv;
 
-// Vector Array Types
+extern template UniformMatrix2fv;
+extern template UniformMatrix3fv;
+extern template UniformMatrix4fv;
 
-//		Float Types
-
-class Uniform1fv : public Uniform
-{
-public:
-	Uniform1fv(const std::vector<float>& values);
-	virtual ~Uniform1fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<float> m_Values;
-};
-
-class Uniform2fv : public Uniform
-{
-public:
-	Uniform2fv(const std::vector<glm::vec2>& values);
-	virtual ~Uniform2fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::vec2> m_Values;
-};
-
-class Uniform3fv : public Uniform
-{
-public:
-	Uniform3fv(const std::vector<glm::vec3>& values);
-	virtual ~Uniform3fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::vec3> m_Values;
-};
-
-class Uniform4fv : public Uniform
-{
-public:
-	Uniform4fv(const std::vector<glm::vec4>& values);
-	virtual ~Uniform4fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::vec4> m_Values;
-};
-
-//		Integer Types
-
-class Uniform1iv : public Uniform
-{
-public:
-	Uniform1iv(const std::vector<int32_t>& values);
-	virtual ~Uniform1iv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<int32_t> m_Values;
-};
-
-class Uniform2iv : public Uniform
-{
-public:
-	Uniform2iv(const std::vector<glm::ivec2>& values);
-	virtual ~Uniform2iv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::ivec2> m_Values;
-};
-
-class Uniform3iv : public Uniform
-{
-public:
-	Uniform3iv(const std::vector<glm::ivec3>& values);
-	virtual ~Uniform3iv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::ivec3> m_Values;
-};
-
-class Uniform4iv : public Uniform
-{
-public:
-	Uniform4iv(const std::vector<glm::ivec4>& values);
-	virtual ~Uniform4iv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::ivec4> m_Values;
-};
-
-//		Unsigned Integer Types
-
-class Uniform1uiv : public Uniform
-{
-public:
-	Uniform1uiv(const std::vector<uint32_t>& values);
-	virtual ~Uniform1uiv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<uint32_t> m_Values;
-};
-
-class Uniform2uiv : public Uniform
-{
-public:
-	Uniform2uiv(const std::vector<glm::uvec2>& values);
-	virtual ~Uniform2uiv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::uvec2> m_Values;
-};
-
-class Uniform3uiv : public Uniform
-{
-public:
-	Uniform3uiv(const std::vector<glm::uvec3>& values);
-	virtual ~Uniform3uiv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::uvec3> m_Values;
-};
-
-class Uniform4uiv : public Uniform
-{
-public:
-	Uniform4uiv(const std::vector<glm::uvec4>& values);
-	virtual ~Uniform4uiv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::uvec4> m_Values;
-};
-
-// Matrix Types
-
-class UniformMatrix2fv : public Uniform
-{
-public:
-	UniformMatrix2fv(const std::vector<glm::mat2>& values);
-	virtual ~UniformMatrix2fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::mat2> m_Values;
-};
-
-class UniformMatrix3fv : public Uniform
-{
-public:
-	UniformMatrix3fv(const std::vector<glm::mat3>& values);
-	virtual ~UniformMatrix3fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::mat3> m_Values;
-};
-
-class UniformMatrix4fv : public Uniform
-{
-public:
-	UniformMatrix4fv(const std::vector<glm::mat4>& values);
-	virtual ~UniformMatrix4fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::mat4> m_Values;
-};
-
-class UniformMatrix2x3fv : public Uniform
-{
-public:
-	UniformMatrix2x3fv(const std::vector<glm::mat2x3>& values);
-	virtual ~UniformMatrix2x3fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::mat2x3> m_Values;
-};
-
-class UniformMatrix3x2fv : public Uniform
-{
-public:
-	UniformMatrix3x2fv(const std::vector<glm::mat3x2>& values);
-	virtual ~UniformMatrix3x2fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::mat3x2> m_Values;
-};
-
-class UniformMatrix2x4fv : public Uniform
-{
-public:
-	UniformMatrix2x4fv(const std::vector<glm::mat2x4>& values);
-	virtual ~UniformMatrix2x4fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::mat2x4> m_Values;
-};
-
-class UniformMatrix4x2fv : public Uniform
-{
-public:
-	UniformMatrix4x2fv(const std::vector<glm::mat4x2>& values);
-	virtual ~UniformMatrix4x2fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::mat4x2> m_Values;
-};
-
-class UniformMatrix3x4fv : public Uniform
-{
-public:
-	UniformMatrix3x4fv(const std::vector<glm::mat3x4>& values);
-	virtual ~UniformMatrix3x4fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::mat3x4> m_Values;
-};
-
-class UniformMatrix4x3fv : public Uniform
-{
-public:
-	UniformMatrix4x3fv(const std::vector<glm::mat4x3>& values);
-	virtual ~UniformMatrix4x3fv() override {}
-
-	virtual void Set(int32_t location) override;
-private:
-	std::vector<glm::mat4x3> m_Values;
-};
+extern template UniformMatrix2x3fv;
+extern template UniformMatrix3x2fv;
+extern template UniformMatrix2x4fv;
+extern template UniformMatrix4x2fv;
+extern template UniformMatrix3x4fv;
+extern template UniformMatrix4x3fv;

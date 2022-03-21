@@ -37,7 +37,7 @@ ComputeTexture::ComputeTexture(GLFWwindow* window)
 	m_Texture->Bind();
 	m_Texture->BindImage();
 
-	m_RenderShader->SetUniformMatrix4f("u_Proj", m_Projection);
+	m_RenderShader->SetUniformMatrix4fv("u_Proj", &m_Projection, 1);
 	m_RenderShader->SetUniform1i("u_Texture", 0);
 
 	m_TextureShader->SetUniform1i("u_Texture", 0);
@@ -91,7 +91,7 @@ void ComputeTexture::Resize(const int& width, const int& height)
 	else if (height == width)
 		m_Projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
 
-	m_RenderShader->SetUniformMatrix4f("u_Proj", m_Projection);
+	m_RenderShader->SetUniformMatrix4fv("u_Proj", &m_Projection, 1);
 
 	// Draw here because event polling hangs the render loop
 	Draw();

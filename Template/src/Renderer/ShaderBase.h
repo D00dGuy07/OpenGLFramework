@@ -67,75 +67,55 @@ public:
 	inline void SetUniform4ui(const std::string& name, const glm::uvec4& value, bool cache = true)
 		{ SetUniform<glm::uvec4, Uniform4ui>(name, value, cache); }
 
-	inline void SetUniform1fv(const std::string& name, const std::vector<float>& values, bool cache = true)
-		{ SetUniform<std::vector<float>, Uniform1fv>(name, values, cache); }
-	inline void SetUniform2fv(const std::string& name, const std::vector<glm::vec2>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::vec2>, Uniform2fv>(name, values, cache); }
-	inline void SetUniform3fv(const std::string& name, const std::vector<glm::vec3>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::vec3>, Uniform3fv>(name, values, cache); }
-	inline void SetUniform4fv(const std::string& name, const std::vector<glm::vec4>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::vec4>, Uniform4fv>(name, values, cache); }
+	inline void SetUniform1fv(const std::string& name, const float* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<float, Uniform1fv>(name, values, count, cache); }
+	inline void SetUniform2fv(const std::string& name, const glm::vec2* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::vec2, Uniform2fv>(name, values, count, cache); }
+	inline void SetUniform3fv(const std::string& name, const glm::vec3* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::vec3, Uniform3fv>(name, values, count, cache); }
+	inline void SetUniform4fv(const std::string& name, const glm::vec4* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::vec4, Uniform4fv>(name, values, count, cache); }
 
-	inline void SetUniform1iv(const std::string& name, const std::vector<int32_t>& values, bool cache = true)
-		{ SetUniform<std::vector<int32_t>, Uniform1iv>(name, values, cache); }
-	inline void SetUniform2iv(const std::string& name, const std::vector<glm::ivec2>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::ivec2>, Uniform2iv>(name, values, cache); }
-	inline void SetUniform3iv(const std::string& name, const std::vector<glm::ivec3>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::ivec3>, Uniform3iv>(name, values, cache); }
-	inline void SetUniform4iv(const std::string& name, const std::vector<glm::ivec4>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::ivec4>, Uniform4iv>(name, values, cache); }
+	inline void SetUniform1iv(const std::string& name, const int32_t* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<int32_t, Uniform1iv>(name, values, count, cache); }
+	inline void SetUniform2iv(const std::string& name, const glm::ivec2* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::ivec2, Uniform2iv>(name, values, count, cache); }
+	inline void SetUniform3iv(const std::string& name, const glm::ivec3* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::ivec3, Uniform3iv>(name, values, count, cache); }
+	inline void SetUniform4iv(const std::string& name, const glm::ivec4* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::ivec4, Uniform4iv>(name, values, count, cache); }
 
-	inline void SetUniform1uiv(const std::string& name, const std::vector<uint32_t>& values, bool cache = true)
-		{ SetUniform<std::vector<uint32_t>, Uniform1uiv>(name, values, cache); }
-	inline void SetUniform2uiv(const std::string& name, const std::vector<glm::uvec2>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::uvec2>, Uniform2uiv>(name, values, cache); }
-	inline void SetUniform3uiv(const std::string& name, const std::vector<glm::uvec3>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::uvec3>, Uniform3uiv>(name, values, cache); }
-	inline void SetUniform4uiv(const std::string& name, const std::vector<glm::uvec4>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::uvec4>, Uniform4uiv>(name, values, cache); }
+	inline void SetUniform1uiv(const std::string& name, const uint32_t* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<uint32_t, Uniform1uiv>(name, values, count, cache); }
+	inline void SetUniform2uiv(const std::string& name, const glm::uvec2* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::uvec2, Uniform2uiv>(name, values, count, cache); }
+	inline void SetUniform3uiv(const std::string& name, const glm::uvec3* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::uvec3, Uniform3uiv>(name, values, count, cache); }
+	inline void SetUniform4uiv(const std::string& name, const glm::uvec4* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::uvec4, Uniform4uiv>(name, values, count, cache); }
 
 	// OpenGL only has uniform functions for arrays of matrices so I only made
 	// matrix uniform classes for arrays. These inline functions convert a single
 	// matrix into an array and call the relevant function for convenience
-	inline void SetUniformMatrix2f(const std::string& name, const glm::mat2& value, bool cache = true)
-		{ SetUniform<std::vector<glm::mat2>, UniformMatrix2fv>(name, std::vector<glm::mat2>{value}, cache); }
-	inline void SetUniformMatrix3f(const std::string& name, const glm::mat3& value, bool cache = true)
-		{ SetUniform<std::vector<glm::mat3>, UniformMatrix3fv>(name, std::vector<glm::mat3>{value}, cache); }
-	inline void SetUniformMatrix4f(const std::string& name, const glm::mat4& value, bool cache = true)
-		{ SetUniform<std::vector<glm::mat4>, UniformMatrix4fv>(name, std::vector<glm::mat4>{value}, cache); }
+	inline void SetUniformMatrix2fv(const std::string& name, const glm::mat2* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::mat2, UniformMatrix2fv>(name, values, count, cache); }
+	inline void SetUniformMatrix3fv(const std::string& name, const glm::mat3* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::mat3, UniformMatrix3fv>(name, values, count, cache); }
+	inline void SetUniformMatrix4fv(const std::string& name, const glm::mat4* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::mat4, UniformMatrix4fv>(name, values, count, cache); }
 
-	inline void SetUniformMatrix2x3f(const std::string& name, const glm::mat2x3& value, bool cache = true)
-		{ SetUniform<std::vector<glm::mat2x3>, UniformMatrix2x3fv>(name, std::vector<glm::mat2x3>{value}, cache); }
-	inline void SetUniformMatrix3x2f(const std::string& name, const glm::mat3x2& value, bool cache = true)
-		{ SetUniform<std::vector<glm::mat3x2>, UniformMatrix3x2fv>(name, std::vector<glm::mat3x2>{value}, cache); }
-	inline void SetUniformMatrix2x4f(const std::string& name, const glm::mat2x4& value, bool cache = true)
-		{ SetUniform<std::vector<glm::mat2x4>, UniformMatrix2x4fv>(name, std::vector<glm::mat2x4>{value}, cache); }
-	inline void SetUniformMatrix4x2f(const std::string& name, const glm::mat4x2& value, bool cache = true)
-		{ SetUniform<std::vector<glm::mat4x2>, UniformMatrix4x2fv>(name, std::vector<glm::mat4x2>{value}, cache); }
-	inline void SetUniformMatrix3x4f(const std::string& name, const glm::mat3x4& value, bool cache = true)
-		{ SetUniform<std::vector<glm::mat3x4>, UniformMatrix3x4fv>(name, std::vector<glm::mat3x4>{value}, cache); }
-	inline void SetUniformMatrix4x3f(const std::string& name, const glm::mat4x3& value, bool cache = true)
-		{ SetUniform<std::vector<glm::mat4x3>, UniformMatrix4x3fv>(name, std::vector<glm::mat4x3>{value}, cache); }
-
-	inline void SetUniformMatrix2fv(const std::string& name, const std::vector<glm::mat2>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::mat2>, UniformMatrix2fv>(name, values, cache); }
-	inline void SetUniformMatrix3fv(const std::string& name, const std::vector<glm::mat3>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::mat3>, UniformMatrix3fv>(name, values, cache); }
-	inline void SetUniformMatrix4fv(const std::string& name, const std::vector<glm::mat4>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::mat4>, UniformMatrix4fv>(name, values, cache); }
-
-	inline void SetUniformMatrix2x3fv(const std::string& name, const std::vector<glm::mat2x3>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::mat2x3>, UniformMatrix2x3fv>(name, values, cache); }
-	inline void SetUniformMatrix3x2fv(const std::string& name, const std::vector<glm::mat3x2>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::mat3x2>, UniformMatrix3x2fv>(name, values, cache); }
-	inline void SetUniformMatrix2x4fv(const std::string& name, const std::vector<glm::mat2x4>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::mat2x4>, UniformMatrix2x4fv>(name, values, cache); }
-	inline void SetUniformMatrix4x2fv(const std::string& name, const std::vector<glm::mat4x2>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::mat4x2>, UniformMatrix4x2fv>(name, values, cache); }
-	inline void SetUniformMatrix3x4fv(const std::string& name, const std::vector<glm::mat3x4>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::mat3x4>, UniformMatrix3x4fv>(name, values, cache); }
-	inline void SetUniformMatrix4x3fv(const std::string& name, const std::vector<glm::mat4x3>& values, bool cache = true)
-		{ SetUniform<std::vector<glm::mat4x3>, UniformMatrix4x3fv>(name, values, cache); }
+	inline void SetUniformMatrix2x3fv(const std::string& name, const glm::mat2x3* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::mat2x3, UniformMatrix2x3fv>(name, values, count, cache); }
+	inline void SetUniformMatrix3x2fv(const std::string& name, const glm::mat3x2* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::mat3x2, UniformMatrix3x2fv>(name, values, count, cache); }
+	inline void SetUniformMatrix2x4fv(const std::string& name, const glm::mat2x4* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::mat2x4, UniformMatrix2x4fv>(name, values, count, cache); }
+	inline void SetUniformMatrix4x2fv(const std::string& name, const glm::mat4x2* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::mat4x2, UniformMatrix4x2fv>(name, values, count, cache); }
+	inline void SetUniformMatrix3x4fv(const std::string& name, const glm::mat3x4* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::mat3x4, UniformMatrix3x4fv>(name, values, count, cache); }
+	inline void SetUniformMatrix4x3fv(const std::string& name, const glm::mat4x3* values, uint32_t count, bool cache = true)
+		{ SetUniformArray<glm::mat4x3, UniformMatrix4x3fv>(name, values, count, cache); }
 
 protected:
 	// A lot of the functions in here don't technically need to be protected and it might
@@ -163,8 +143,11 @@ protected:
 
 	// Uniform Templates
 
-	template<typename argument, typename uniformType>
-	void SetUniform(const std::string& name, const argument& value, bool cache);
+	template<typename T, typename uniformType>
+	void SetUniform(const std::string& name, const T& value, bool cache);
+
+	template<typename T, typename uniformType>
+	void SetUniformArray(const std::string& name, const T* value, uint32_t count, bool cache);
 };
 
 extern template void ShaderBase::SetUniform<float, Uniform1f>(const std::string& name, const float& value, bool cache);
@@ -182,28 +165,28 @@ extern template void ShaderBase::SetUniform<glm::uvec2, Uniform2ui>(const std::s
 extern template void ShaderBase::SetUniform<glm::uvec3, Uniform3ui>(const std::string& name, const glm::uvec3& value, bool cache);
 extern template void ShaderBase::SetUniform<glm::uvec4, Uniform4ui>(const std::string& name, const glm::uvec4& value, bool cache);
 
-extern template void ShaderBase::SetUniform<std::vector<float>, Uniform1fv>(const std::string& name, const std::vector<float>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::vec2>, Uniform2fv>(const std::string& name, const std::vector<glm::vec2>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::vec3>, Uniform3fv>(const std::string& name, const std::vector<glm::vec3>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::vec4>, Uniform4fv>(const std::string& name, const std::vector<glm::vec4>& value, bool cache);
+extern template void ShaderBase::SetUniformArray<float, Uniform1fv>(const std::string& name, const float* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::vec2, Uniform2fv>(const std::string& name, const glm::vec2* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::vec3, Uniform3fv>(const std::string& name, const glm::vec3* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::vec4, Uniform4fv>(const std::string& name, const glm::vec4* value, uint32_t count, bool cache);
 
-extern template void ShaderBase::SetUniform<std::vector<int32_t>, Uniform1iv>(const std::string& name, const std::vector<int32_t>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::ivec2>, Uniform2iv>(const std::string& name, const std::vector<glm::ivec2>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::ivec3>, Uniform3iv>(const std::string& name, const std::vector<glm::ivec3>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::ivec4>, Uniform4iv>(const std::string& name, const std::vector<glm::ivec4>& value, bool cache);
+extern template void ShaderBase::SetUniformArray<int32_t, Uniform1iv>(const std::string& name, const int32_t* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::ivec2, Uniform2iv>(const std::string& name, const glm::ivec2* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::ivec3, Uniform3iv>(const std::string& name, const glm::ivec3* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::ivec4, Uniform4iv>(const std::string& name, const glm::ivec4* value, uint32_t count, bool cache);
 
-extern template void ShaderBase::SetUniform<std::vector<uint32_t>, Uniform1uiv>(const std::string& name, const std::vector<uint32_t>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::uvec2>, Uniform2uiv>(const std::string& name, const std::vector<glm::uvec2>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::uvec3>, Uniform3uiv>(const std::string& name, const std::vector<glm::uvec3>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::uvec4>, Uniform4uiv>(const std::string& name, const std::vector<glm::uvec4>& value, bool cache);
+extern template void ShaderBase::SetUniformArray<uint32_t, Uniform1uiv>(const std::string& name, const uint32_t* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::uvec2, Uniform2uiv>(const std::string& name, const glm::uvec2* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::uvec3, Uniform3uiv>(const std::string& name, const glm::uvec3* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::uvec4, Uniform4uiv>(const std::string& name, const glm::uvec4* value, uint32_t count, bool cache);
 
-extern template void ShaderBase::SetUniform<std::vector<glm::mat2>, UniformMatrix2fv>(const std::string& name, const std::vector<glm::mat2>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::mat3>, UniformMatrix3fv>(const std::string& name, const std::vector<glm::mat3>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::mat4>, UniformMatrix4fv>(const std::string& name, const std::vector<glm::mat4>& value, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::mat2, UniformMatrix2fv>(const std::string& name, const glm::mat2* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::mat3, UniformMatrix3fv>(const std::string& name, const glm::mat3* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::mat4, UniformMatrix4fv>(const std::string& name, const glm::mat4* value, uint32_t count, bool cache);
 
-extern template void ShaderBase::SetUniform<std::vector<glm::mat2x3>, UniformMatrix2x3fv>(const std::string& name, const std::vector<glm::mat2x3>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::mat3x2>, UniformMatrix3x2fv>(const std::string& name, const std::vector<glm::mat3x2>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::mat2x4>, UniformMatrix2x4fv>(const std::string& name, const std::vector<glm::mat2x4>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::mat4x2>, UniformMatrix4x2fv>(const std::string& name, const std::vector<glm::mat4x2>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::mat3x4>, UniformMatrix3x4fv>(const std::string& name, const std::vector<glm::mat3x4>& value, bool cache);
-extern template void ShaderBase::SetUniform<std::vector<glm::mat4x3>, UniformMatrix4x3fv>(const std::string& name, const std::vector<glm::mat4x3>& value, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::mat2x3, UniformMatrix2x3fv>(const std::string& name, const glm::mat2x3* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::mat3x2, UniformMatrix3x2fv>(const std::string& name, const glm::mat3x2* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::mat2x4, UniformMatrix2x4fv>(const std::string& name, const glm::mat2x4* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::mat4x2, UniformMatrix4x2fv>(const std::string& name, const glm::mat4x2* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::mat3x4, UniformMatrix3x4fv>(const std::string& name, const glm::mat3x4* value, uint32_t count, bool cache);
+extern template void ShaderBase::SetUniformArray<glm::mat4x3, UniformMatrix4x3fv>(const std::string& name, const glm::mat4x3* value, uint32_t count, bool cache);
