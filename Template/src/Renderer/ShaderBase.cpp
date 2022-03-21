@@ -182,19 +182,35 @@ void ShaderBase::SetUniforms()
 	});
 }
 
-template<typename argument, typename uniformType>
-void ShaderBase::SetUniform(const std::string& name, const argument& value, bool cache)
+template<typename T, typename uniformType>
+void ShaderBase::SetUniform(const std::string& name, const T& value, bool cache)
 {
 	if (!cache)
 	{
 		Renderer::Submit([=]() {
 			uniformType(value).Set(GetUniformLocation(name));
-			});
+		});
 		return;
 	}
 
 	delete m_UniformCache[name];
 	m_UniformCache[name] = new uniformType(value);
+	m_CachedUniforms = true;
+}
+
+template<typename T, typename uniformType>
+void ShaderBase::SetUniformArray(const std::string& name, const T* value, uint32_t count, bool cache)
+{
+	if (!cache)
+	{
+		Renderer::Submit([=]() {
+			uniformType(value, count).Set(GetUniformLocation(name));
+		});
+		return;
+	}
+
+	delete m_UniformCache[name];
+	m_UniformCache[name] = new uniformType(value, count);
 	m_CachedUniforms = true;
 }
 
@@ -213,28 +229,28 @@ template void ShaderBase::SetUniform<glm::uvec2, Uniform2ui>(const std::string& 
 template void ShaderBase::SetUniform<glm::uvec3, Uniform3ui>(const std::string& name, const glm::uvec3& value, bool cache);
 template void ShaderBase::SetUniform<glm::uvec4, Uniform4ui>(const std::string& name, const glm::uvec4& value, bool cache);
 
-template void ShaderBase::SetUniform<std::vector<float>, Uniform1fv>(const std::string& name, const std::vector<float>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::vec2>, Uniform2fv>(const std::string& name, const std::vector<glm::vec2>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::vec3>, Uniform3fv>(const std::string& name, const std::vector<glm::vec3>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::vec4>, Uniform4fv>(const std::string& name, const std::vector<glm::vec4>& value, bool cache);
+template void ShaderBase::SetUniformArray<float, Uniform1fv>(const std::string& name, const float* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::vec2, Uniform2fv>(const std::string& name, const glm::vec2* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::vec3, Uniform3fv>(const std::string& name, const glm::vec3* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::vec4, Uniform4fv>(const std::string& name, const glm::vec4* value, uint32_t count, bool cache);
 
-template void ShaderBase::SetUniform<std::vector<int32_t>, Uniform1iv>(const std::string& name, const std::vector<int32_t>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::ivec2>, Uniform2iv>(const std::string& name, const std::vector<glm::ivec2>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::ivec3>, Uniform3iv>(const std::string& name, const std::vector<glm::ivec3>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::ivec4>, Uniform4iv>(const std::string& name, const std::vector<glm::ivec4>& value, bool cache);
+template void ShaderBase::SetUniformArray<int32_t, Uniform1iv>(const std::string& name, const int32_t* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::ivec2, Uniform2iv>(const std::string& name, const glm::ivec2* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::ivec3, Uniform3iv>(const std::string& name, const glm::ivec3* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::ivec4, Uniform4iv>(const std::string& name, const glm::ivec4* value, uint32_t count, bool cache);
 
-template void ShaderBase::SetUniform<std::vector<uint32_t>, Uniform1uiv>(const std::string& name, const std::vector<uint32_t>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::uvec2>, Uniform2uiv>(const std::string& name, const std::vector<glm::uvec2>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::uvec3>, Uniform3uiv>(const std::string& name, const std::vector<glm::uvec3>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::uvec4>, Uniform4uiv>(const std::string& name, const std::vector<glm::uvec4>& value, bool cache);
+template void ShaderBase::SetUniformArray<uint32_t, Uniform1uiv>(const std::string& name, const uint32_t* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::uvec2, Uniform2uiv>(const std::string& name, const glm::uvec2* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::uvec3, Uniform3uiv>(const std::string& name, const glm::uvec3* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::uvec4, Uniform4uiv>(const std::string& name, const glm::uvec4* value, uint32_t count, bool cache);
 
-template void ShaderBase::SetUniform<std::vector<glm::mat2>, UniformMatrix2fv>(const std::string& name, const std::vector<glm::mat2>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::mat3>, UniformMatrix3fv>(const std::string& name, const std::vector<glm::mat3>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::mat4>, UniformMatrix4fv>(const std::string& name, const std::vector<glm::mat4>& value, bool cache);
+template void ShaderBase::SetUniformArray<glm::mat2, UniformMatrix2fv>(const std::string& name, const glm::mat2* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::mat3, UniformMatrix3fv>(const std::string& name, const glm::mat3* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::mat4, UniformMatrix4fv>(const std::string& name, const glm::mat4* value, uint32_t count, bool cache);
 
-template void ShaderBase::SetUniform<std::vector<glm::mat2x3>, UniformMatrix2x3fv>(const std::string& name, const std::vector<glm::mat2x3>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::mat3x2>, UniformMatrix3x2fv>(const std::string& name, const std::vector<glm::mat3x2>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::mat2x4>, UniformMatrix2x4fv>(const std::string& name, const std::vector<glm::mat2x4>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::mat4x2>, UniformMatrix4x2fv>(const std::string& name, const std::vector<glm::mat4x2>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::mat3x4>, UniformMatrix3x4fv>(const std::string& name, const std::vector<glm::mat3x4>& value, bool cache);
-template void ShaderBase::SetUniform<std::vector<glm::mat4x3>, UniformMatrix4x3fv>(const std::string& name, const std::vector<glm::mat4x3>& value, bool cache);
+template void ShaderBase::SetUniformArray<glm::mat2x3, UniformMatrix2x3fv>(const std::string& name, const glm::mat2x3* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::mat3x2, UniformMatrix3x2fv>(const std::string& name, const glm::mat3x2* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::mat2x4, UniformMatrix2x4fv>(const std::string& name, const glm::mat2x4* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::mat4x2, UniformMatrix4x2fv>(const std::string& name, const glm::mat4x2* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::mat3x4, UniformMatrix3x4fv>(const std::string& name, const glm::mat3x4* value, uint32_t count, bool cache);
+template void ShaderBase::SetUniformArray<glm::mat4x3, UniformMatrix4x3fv>(const std::string& name, const glm::mat4x3* value, uint32_t count, bool cache);

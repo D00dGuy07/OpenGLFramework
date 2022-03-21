@@ -80,22 +80,37 @@ void openglErrorCallback(GLenum source, GLenum type, GLuint id,
     switch (severity) {
     case GL_DEBUG_SEVERITY_HIGH:
         _severity = "HIGH";
+#ifdef GLDEBUG_OMIT_SEVERITY_HIGH
+        return;
+#endif // GLDEBUG_OMIT_SEVERITY_HIGH
         break;
 
     case GL_DEBUG_SEVERITY_MEDIUM:
         _severity = "MEDIUM";
+#ifdef GLDEBUG_OMIT_SEVERITY_MEDIUM
+        return;
+#endif // GLDEBUG_OMIT_SEVERITY_MEDIUM
         break;
 
     case GL_DEBUG_SEVERITY_LOW:
         _severity = "LOW";
+#ifdef GLDEBUG_OMIT_SEVERITY_LOW
+        return;
+#endif // GLDEBUG_OMIT_SEVERITY_LOW
         break;
 
     case GL_DEBUG_SEVERITY_NOTIFICATION:
         _severity = "NOTIFICATION";
+#ifdef GLDEBUG_OMIT_SEVERITY_NOTIFICATION
+        return;
+#endif // GLDEBUG_OMIT_SEVERITY_NOTIFICATION
         break;
 
     default:
         _severity = "UNKNOWN";
+#ifdef GLDEBUG_OMIT_SEVERITY_UNKNOWN
+        return;
+#endif // GLDEBUG_OMIT_SEVERITY_UNKNOWN
         break;
     }
 

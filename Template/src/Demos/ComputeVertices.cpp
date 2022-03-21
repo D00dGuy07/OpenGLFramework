@@ -36,14 +36,14 @@ ComputeVertices::ComputeVertices(GLFWwindow* window)
 	if (FileHelpers::FileExists("res/ComputeVertices/Render.shaderbin"))
 		m_RenderShader = new Shader("res/ComputeVertices/Render.shaderbin", true);
 	else
-	m_RenderShader = new Shader("res/ComputeVertices/Render.shader", false);
+		m_RenderShader = new Shader("res/ComputeVertices/Render.shader", false);
 
 	if (FileHelpers::FileExists("res/ComputeVertices/Vertices.shaderbin"))
 		m_VerticesShader = new ComputeShader("res/ComputeVertices/Vertices.shaderbin", true);
 	else
-	m_VerticesShader = new ComputeShader("res/ComputeVertices/Vertices.shader", false);
+		m_VerticesShader = new ComputeShader("res/ComputeVertices/Vertices.shader", false);
 
-	m_RenderShader->SetUniformMatrix4f("u_Proj", m_Projection);
+	m_RenderShader->SetUniformMatrix4fv("u_Proj", &m_Projection, 1);
 
 	m_VerticesShader->SetUniform1i("u_Resolution", resolution);
 
@@ -134,7 +134,7 @@ void ComputeVertices::Resize(const int& width, const int& height)
 	else if (height == width)
 		m_Projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
 
-	m_RenderShader->SetUniformMatrix4f("u_Proj", m_Projection);
+	m_RenderShader->SetUniformMatrix4fv("u_Proj", &m_Projection, 1);
 
 	// Draw here because event polling hangs the render loop
 	Draw();
