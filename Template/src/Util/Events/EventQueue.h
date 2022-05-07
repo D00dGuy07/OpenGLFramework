@@ -13,7 +13,7 @@ template<typename... arguments>
 class EventQueue
 {
 public:
-	Ref<EventConnection<arguments...>>& Connect(std::function<void(arguments...)> callback)
+	std::shared_ptr<EventConnection<arguments...>>& Connect(std::function<void(arguments...)> callback)
 	{ return m_CallbackList.Connect(callback); }
 
 	void Enqueue(arguments... args)

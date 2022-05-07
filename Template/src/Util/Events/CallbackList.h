@@ -3,24 +3,23 @@
 #include <vector>
 #include <tuple>
 #include <functional>
+#include <memory>
 
 #include "EventConnection.h"
-
-template<typename... arguments> class CallbackList;
 
 template<typename... arguments>
 class CallbackList
 {
 public:
-	Ref<EventConnection<arguments...>>& Connect(std::function<void(arguments...)> callback)
+	std::shared_ptr<EventConnection<arguments...>>& Connect(std::function<void(arguments...)> callback)
 	{
-		m_CallbackList.emplace_back(Ref<EventConnection<arguments...>>::Create(callback));
+		m_CallbackList.emplace_back(std::make_shared<EventConnection<arguments...>>(callback));
 		return *(m_CallbackList.end() - 1);
 	}
 
 	void Call(arguments... args)
 	{
-		std::vector<Ref<EventConnection<arguments...>>> activeCallbacks;
+		std::vector<std::shared_ptr<EventConnection<arguments...>>> activeCallbacks;
 		activeCallbacks.reserve(m_CallbackList.size());
 		for (auto& callback : m_CallbackList)
 		{
@@ -36,5 +35,5 @@ public:
 	}
 
 private:
-	std::vector<Ref<EventConnection<arguments...>>> m_CallbackList;
+	std::vector<std::shared_ptr<EventConnection<arguments...>>> m_CallbackList;
 };

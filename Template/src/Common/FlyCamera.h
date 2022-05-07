@@ -47,7 +47,7 @@ private:
 	void UpdateProjection(int32_t width, int32_t height);
 
 	// Event Connections
-	Ref<EventConnection<GLFWwindow*, int, int, int, int>> m_KeyPressedConnection;
-	Ref<EventConnection<GLFWwindow*, double, double>> m_MousePosConnection;
-	Ref<EventConnection<GLFWwindow*, int, int>> m_SizeChangeConnection;
+	std::shared_ptr<EventConnection<GLFWwindow*, int, int, int, int>> m_KeyPressedConnection;
+	std::shared_ptr<EventConnection<GLFWwindow*, double, double>> m_MousePosConnection;
+	std::shared_ptr<EventConnection<GLFWwindow*, int, int>> m_SizeChangeConnection;
 };

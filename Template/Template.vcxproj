@@ -220,7 +220,6 @@
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\Renderer\VertexBufferLayout.h" />
     <ClInclude Include="src\Util\GLFWEventWrapper.h" />
-    <ClInclude Include="src\Util\Ref.h" />
     <ClInclude Include="src\Util\Sort.h" />
     <ClInclude Include="src\Util\Timer.h" />
     <ClInclude Include="vendor\glm\common.hpp" />
