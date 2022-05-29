@@ -10,14 +10,14 @@ public:
 	ShaderBuffer(const void* data, size_t size);
 	virtual ~ShaderBuffer();
 
-	virtual void Bind() const override;
-	void BindIndexed(uint32_t index = 0) const;
+	virtual void Bind() override;
+	void BindIndexed(uint32_t index = 0);
 private:
-	static uint32_t m_BoundRendererID;
+	static ShaderBuffer* m_BoundShaderBuffer;
 
-	static std::vector<uint32_t> m_BoundIndexedTargets;
+	static std::vector<ShaderBuffer*> m_BoundIndexedBuffers;
 	static uint32_t m_MaxIndexedTargets;
 
 	static void ReserveBindings();
-	void FreeBinding(uint32_t rendererId);
+	void FreeBinding(ShaderBuffer* shaderBuffer);
 };

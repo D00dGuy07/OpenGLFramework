@@ -3,7 +3,7 @@
 #include "Renderer.h"
 #include <iostream>
 
-uint32_t VertexBuffer::m_BoundRendererID = 0xFFFFFFFF;
+VertexBuffer* VertexBuffer::m_BoundVertexBuffer = nullptr;
 
 VertexBuffer::VertexBuffer(const void* data, size_t size)
 	: GLBuffer()
@@ -13,20 +13,22 @@ VertexBuffer::VertexBuffer(const void* data, size_t size)
 
 VertexBuffer::~VertexBuffer()
 {
+	if (m_BoundVertexBuffer == this)
+		m_BoundVertexBuffer = nullptr;
+
 	uint32_t id = m_RendererID;
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == id)
-			m_BoundRendererID = 0xFFFFFFFF;
 		glDeleteBuffers(1, &id);
 	});
 }
 
-void VertexBuffer::Bind() const
+void VertexBuffer::Bind()
 {
+	if (m_BoundVertexBuffer == this)
+		return;
+	m_BoundVertexBuffer = this;
+
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == m_RendererID)
-			return;
-		m_BoundRendererID = m_RendererID;
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 	});
 }

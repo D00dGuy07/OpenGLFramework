@@ -4,9 +4,9 @@
 
 #include <iostream>
 
-uint32_t ShaderBuffer::m_BoundRendererID = 0xFFFFFFFF;
+ShaderBuffer* ShaderBuffer::m_BoundShaderBuffer = nullptr;
 
-std::vector<uint32_t> ShaderBuffer::m_BoundIndexedTargets = std::vector<uint32_t>();
+std::vector<ShaderBuffer*> ShaderBuffer::m_BoundIndexedBuffers = std::vector<ShaderBuffer*>();
 uint32_t ShaderBuffer::m_MaxIndexedTargets = 0U;
 
 ShaderBuffer::ShaderBuffer(const void* data, size_t size)
@@ -20,26 +20,28 @@ ShaderBuffer::ShaderBuffer(const void* data, size_t size)
 
 ShaderBuffer::~ShaderBuffer()
 {
+	if (m_BoundShaderBuffer == this)
+		m_BoundShaderBuffer = nullptr;
+	FreeBinding(this);
+
 	uint32_t id = m_RendererID;
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == id)
-			m_BoundRendererID = 0xFFFFFFFF;
-		FreeBinding(id);
 		glDeleteBuffers(1, &id);
 	});
 }
 
-void ShaderBuffer::Bind() const
+void ShaderBuffer::Bind()
 {
+	if (m_Target == GLBuffer::Target::ShaderStorage && m_BoundShaderBuffer == nullptr)
+		return;
+	m_BoundShaderBuffer = this;
+
 	Renderer::Submit([=]() {
-		if (m_Target == GLBuffer::Target::ShaderStorage && m_BoundRendererID == m_RendererID)
-			return;
-		m_BoundRendererID = m_RendererID;
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_RendererID);
 	});
 }
 
-void ShaderBuffer::BindIndexed(uint32_t index) const
+void ShaderBuffer::BindIndexed(uint32_t index)
 {
 	if (m_MaxIndexedTargets == 0)
 		ReserveBindings();
@@ -50,11 +52,12 @@ void ShaderBuffer::BindIndexed(uint32_t index) const
 		return;
 	}
 
+	if (m_Target == GLBuffer::Target::ShaderStorage && m_BoundIndexedBuffers[index] == this)
+		return;
+	m_BoundIndexedBuffers[index] = this;
+
 	Bind();
 	Renderer::Submit([=]() {
-		if (m_Target == GLBuffer::Target::ShaderStorage && m_BoundIndexedTargets[index] == m_RendererID)
-			return;
-		m_BoundIndexedTargets[index] = m_RendererID;
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, index, m_RendererID);
 	});
 }
@@ -64,12 +67,12 @@ void ShaderBuffer::BindIndexed(uint32_t index) const
 void ShaderBuffer::ReserveBindings()
 {
 	glGetIntegerv(GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS, reinterpret_cast<int32_t*>(&m_MaxIndexedTargets));
-	m_BoundIndexedTargets.assign(m_MaxIndexedTargets, 0xFFFFFFFF);
+	m_BoundIndexedBuffers.assign(m_MaxIndexedTargets, nullptr);
 }
 
-void ShaderBuffer::FreeBinding(uint32_t rendererId)
+void ShaderBuffer::FreeBinding(ShaderBuffer* shaderBuffer)
 {
 	for (uint32_t i = 0; i < m_MaxIndexedTargets; i++)
-		if (m_BoundIndexedTargets[i] == rendererId)
-			m_BoundIndexedTargets[i] = 0xFFFFFFFF;
+		if (m_BoundIndexedBuffers[i] == shaderBuffer)
+			m_BoundIndexedBuffers[i] = nullptr;
 }

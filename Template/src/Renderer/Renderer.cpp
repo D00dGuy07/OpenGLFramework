@@ -7,6 +7,70 @@
 RenderCommandQueue Renderer::m_CommandQueue = RenderCommandQueue();
 GarbageHeap Renderer::m_GarbageHeap = GarbageHeap(1024 * 512);
 
+void Renderer::UseBlending(bool enable, BlendFunction source, BlendFunction destination)
+{
+	Submit([=]() {
+		if (enable)
+			glEnable(GL_BLEND);
+		else
+			glDisable(GL_BLEND);
+
+		glBlendFunc(static_cast<GLenum>(source), static_cast<GLenum>(destination));
+	});
+}
+
+void Renderer::UseDepthFunction(bool enable, DepthFunction function)
+{
+	Submit([=]() {
+		if (enable)
+			glEnable(GL_DEPTH_TEST);
+		else
+			glDisable(GL_DEPTH_TEST);
+
+		glDepthFunc(static_cast<GLenum>(function));
+	});
+}
+
+void Renderer::SetCullFace(bool enable, CullMode mode)
+{
+	Submit([=]() {
+		if (enable)
+			glEnable(GL_CULL_FACE);
+		else
+			glDisable(GL_CULL_FACE);
+
+		glCullFace(static_cast<GLenum>(mode));
+	});
+}
+
+void Renderer::SetPolygonMode(PolygonMode mode)
+{
+	Submit([=]() {
+		glPolygonMode(GL_FRONT_AND_BACK, static_cast<GLenum>(mode));
+	});
+}
+
+void Renderer::SetDepthRange(float near, float far)
+{
+	Submit([=]() {
+		glDepthRange(near, far);
+	});
+}
+
+void Renderer::SetDepthRange(double near, double far)
+{
+	Submit([=]() {
+		glDepthRange(near, far);
+	});
+}
+
+void Renderer::SetViewport(int32_t x, int32_t y, int32_t width, int32_t height)
+{
+	Submit([=]() {
+		glViewport(x, y, width, height);
+	});
+}
+
 void Renderer::SubmitMesh(Mesh& mesh, Shader& shader)
 {
 	if (mesh.m_VertexBuffer == NULL || mesh.m_IndexBuffer == NULL)

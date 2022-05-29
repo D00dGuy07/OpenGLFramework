@@ -154,8 +154,6 @@ void FlyCamera::UpdateProjection(int32_t width, int32_t height)
 		m_Projection = glm::perspective(static_cast<float>(glm::radians(m_FOV)),
 			static_cast<float>(width) / static_cast<float>(height),
 			static_cast<float>(m_ClipNear), static_cast<float>(m_ClipFar));
-		Renderer::Submit([width, height]() {
-			glViewport(0, 0, width, height);
-		});
+		Renderer::SetViewport(width, height);
 	}
 }

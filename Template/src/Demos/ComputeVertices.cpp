@@ -76,7 +76,7 @@ ComputeVertices::ComputeVertices(GLFWwindow* window)
 		}
 	}
 
-	m_OriginalVerts = new ShaderBuffer(reinterpret_cast<float*>(squareVertices.data()), 8U * static_cast<uint32_t>(squareVertices.size()));
+	m_OriginalVerts = new ShaderBuffer(reinterpret_cast<float*>(squareVertices.data()), static_cast<size_t>(8U) * squareVertices.size());
 	m_OriginalVerts->BindIndexed(0);
 
 	m_SquareMesh->SetVertices(reinterpret_cast<float*>(squareVertices.data()), 8U * static_cast<uint32_t>(squareVertices.size()));
@@ -96,25 +96,13 @@ ComputeVertices::ComputeVertices(GLFWwindow* window)
 	));
 
 	// Set wire frame
-	Renderer::Submit([]() {
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	});
+	Renderer::SetPolygonMode(Renderer::PolygonMode::Line);
 
 	wrapper->ConnectMouseButton([&](GLFWwindow*, int button, int action, int) {
 		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 		{
 			m_WireFrame = !m_WireFrame;
-			if (m_WireFrame) {
-				Renderer::Submit([]() {
-					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-				});
-			}
-			else
-			{
-				Renderer::Submit([]() {
-					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-				});
-			}
+			Renderer::SetPolygonMode(m_WireFrame ? Renderer::PolygonMode::Line : Renderer::PolygonMode::Fill);
 		}
 	});
 }
@@ -122,9 +110,7 @@ ComputeVertices::ComputeVertices(GLFWwindow* window)
 void ComputeVertices::Resize(const int& width, const int& height)
 {
 	// Resize render output
-	Renderer::Submit([width, height]() {
-		glViewport(0, 0, width, height);
-	});
+	Renderer::SetViewport(width, height);
 
 	// Update projection to preserve the aspect ratio and send it to the shader
 	if (width > height)

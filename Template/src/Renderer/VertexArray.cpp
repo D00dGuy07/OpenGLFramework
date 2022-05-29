@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-uint32_t VertexArray::m_BoundRendererID = 0xFFFFFFFF;
+VertexArray* VertexArray::m_BoundVertexArray = nullptr;
 
 VertexArray::VertexArray()
 	: m_RendererID(NULL)
@@ -18,15 +18,16 @@ VertexArray::VertexArray()
 
 VertexArray::~VertexArray()
 {
+	if (m_BoundVertexArray == this)
+		m_BoundVertexArray = nullptr;
+
 	uint32_t id = m_RendererID;
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == id)
-			m_BoundRendererID = 0xFFFFFFFF;
 		glDeleteVertexArrays(1, &id);
 	});
 }
 
-void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
+void VertexArray::AddBuffer(VertexBuffer& vb, const VertexBufferLayout& layout)
 {
 	Bind();
 	vb.Bind();
@@ -41,16 +42,17 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 			glVertexAttribPointer(i, element.count, element.type,
 				element.normalized, stride, reinterpret_cast<const void*>(offset));
 		});
-		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
+		offset += static_cast<uint64_t>(element.count * VertexBufferElement::GetSizeOfType(element.type));
 	}
 }
 
-void VertexArray::Bind() const
+void VertexArray::Bind()
 {
+	if (m_BoundVertexArray == this)
+		return;
+	m_BoundVertexArray = this;
+
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == m_RendererID)
-			return;
-		m_BoundRendererID = m_RendererID;
 		glBindVertexArray(m_RendererID);
 	});
 }

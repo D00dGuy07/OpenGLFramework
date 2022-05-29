@@ -17,5 +17,5 @@ public:
 private:
 	InternalImageFormat m_Format;
 
-	static uint32_t m_BoundRendererID;
+	static RenderBuffer* m_BoundRenderBuffer;
 };

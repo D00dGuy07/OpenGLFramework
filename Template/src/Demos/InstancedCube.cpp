@@ -105,14 +105,8 @@ InstancedCube::InstancedCube(GLFWwindow* window)
 	));
 
 	// Set some stuff for 3D
-	Renderer::Submit([]() {
-		// Enable Depth test
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LESS);
-
-		// Enable Culling
-		glEnable(GL_CULL_FACE);
-	});
+	Renderer::UseDepthFunction(true);
+	Renderer::SetCullFace(true);
 }
 
 void InstancedCube::Draw()

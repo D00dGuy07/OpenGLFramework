@@ -60,7 +60,7 @@ private:
 	std::vector<FBOAttachment> m_ColorAttachments;
 	std::vector<FBOAttachment> m_OtherAttachments;
 
-	static uint32_t m_BoundRendererID;
+	static Framebuffer* m_BoundFramebuffer;
 
 	friend class Renderer;
 };

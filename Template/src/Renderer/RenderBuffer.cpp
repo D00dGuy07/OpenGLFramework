@@ -4,7 +4,7 @@
 
 #include "glad/glad.h"
 
-uint32_t RenderBuffer::m_BoundRendererID = 0xFFFFFFFF;
+RenderBuffer* RenderBuffer::m_BoundRenderBuffer = nullptr;
 
 RenderBuffer::RenderBuffer(int32_t width, int32_t height, InternalImageFormat format)
 	: ImageBuffer(NULL, width, height), m_Format(format)
@@ -21,20 +21,22 @@ RenderBuffer::RenderBuffer(int32_t width, int32_t height, InternalImageFormat fo
 
 RenderBuffer::~RenderBuffer()
 {
+	if (m_BoundRenderBuffer == this)
+		m_BoundRenderBuffer = nullptr;
+
 	uint32_t id = m_RendererID;
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == id)
-			m_BoundRendererID = 0xFFFFFFFF;
 		glDeleteRenderbuffers(1, &id);
 	});
 }
 
 void RenderBuffer::Bind()
 {
+	if (m_BoundRenderBuffer == this)
+		return;
+	m_BoundRenderBuffer = this;
+
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == m_RendererID)
-			return;
-		m_BoundRendererID = m_RendererID;
 		glBindRenderbuffer(GL_RENDERBUFFER, m_RendererID);
 	});
 }

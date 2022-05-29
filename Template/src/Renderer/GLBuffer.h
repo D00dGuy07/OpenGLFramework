@@ -10,7 +10,7 @@ public:
 	GLBuffer();
 	virtual ~GLBuffer() {}
 
-	virtual void Bind() const = 0;
+	virtual void Bind() = 0;
 
 	inline size_t GetSize() const { return m_Size; }
 protected:

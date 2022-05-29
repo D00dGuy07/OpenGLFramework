@@ -9,7 +9,7 @@
 #include <iostream>
 #include <stdexcept>
 
-uint32_t Framebuffer::m_BoundRendererID = 0xFFFFFFFF; // Not 0xFFFFFFFF because the default framebuffer is 0
+Framebuffer* Framebuffer::m_BoundFramebuffer = nullptr;
 
 Framebuffer::Framebuffer(const FramebufferSpec& spec)
 	: m_RendererID(0), m_Spec(spec),
@@ -87,18 +87,23 @@ Framebuffer::Framebuffer(const FramebufferSpec& spec)
 		uint8_t attachmentNumber = 0;
 		for (FBOAttachmentSpec attachmentSpec : m_Spec.ColorAttachments)
 		{
-			ImageBuffer* buffer = NULL;
+			ImageBuffer* buffer = nullptr;
 			uint32_t* id;
 
 			switch (attachmentSpec.BufferType)
 			{
 			case ImageBufferType::Texture:
-				buffer = new Texture(m_Spec.Width, m_Spec.Height, attachmentSpec.Format);
+			{
+				TextureSpec textureSpec = TextureSpec();
+				textureSpec.Format = attachmentSpec.Format;
+				buffer = new Texture(m_Spec.Width, m_Spec.Height, textureSpec);
+
 				id = &buffer->m_RendererID;
 				Renderer::Submit([=]() {
 					glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + attachmentNumber, GL_TEXTURE_2D, *id, 0);
 				});
 				break;
+			}
 			case ImageBufferType::RenderBuffer:
 				buffer = new RenderBuffer(m_Spec.Width, m_Spec.Height, attachmentSpec.Format);
 				id = &buffer->m_RendererID;
@@ -118,7 +123,7 @@ Framebuffer::Framebuffer(const FramebufferSpec& spec)
 
 		for (FBOAttachmentSpec attachmentSpec : m_Spec.OtherAttachments)
 		{
-			ImageBuffer* buffer = NULL;
+			ImageBuffer* buffer = nullptr;
 			int32_t glAttachmentPoint;
 			uint32_t* id;
 
@@ -138,12 +143,16 @@ Framebuffer::Framebuffer(const FramebufferSpec& spec)
 			switch (attachmentSpec.BufferType)
 			{
 			case ImageBufferType::Texture:
-				buffer = new Texture(m_Spec.Width, m_Spec.Height, attachmentSpec.Format);
+			{
+				TextureSpec textureSpec = TextureSpec();
+				textureSpec.Format = attachmentSpec.Format;
+				buffer = new Texture(m_Spec.Width, m_Spec.Height, textureSpec);
 				id = &buffer->m_RendererID;
 				Renderer::Submit([=]() {
 					glFramebufferTexture2D(GL_FRAMEBUFFER, glAttachmentPoint, GL_TEXTURE_2D, *id, 0);
 				});
 				break;
+			}
 			case ImageBufferType::RenderBuffer:
 				buffer = new RenderBuffer(m_Spec.Width, m_Spec.Height, attachmentSpec.Format);
 				id = &buffer->m_RendererID;
@@ -164,10 +173,11 @@ Framebuffer::Framebuffer(const FramebufferSpec& spec)
 
 Framebuffer::~Framebuffer()
 {
+	if (m_BoundFramebuffer == this)
+		m_BoundFramebuffer = nullptr;
+
 	uint32_t id = m_RendererID;
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == id)
-			m_BoundRendererID = 0;
 		glDeleteFramebuffers(1, &id);
 	});
 
@@ -180,20 +190,22 @@ Framebuffer::~Framebuffer()
 
 void Framebuffer::Bind()
 {
+	if (m_BoundFramebuffer == this)
+		return;
+	m_BoundFramebuffer = this;
+
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == m_RendererID)
-			return;
-		m_BoundRendererID = m_RendererID;
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 	});
 }
 
 void Framebuffer::Unbind()
 {
+	if (m_BoundFramebuffer == nullptr)
+		return;
+	m_BoundFramebuffer = nullptr;
+
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == 0)
-			return;
-		m_BoundRendererID = 0;
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	});
 }

@@ -22,9 +22,9 @@
 
 PostProcessQuad::PostProcessQuad(GLFWwindow* window)
 	: Demo(window), 
-	m_SquareShader(NULL), m_SquareMesh(new Mesh()),
+	m_SquareShader(nullptr), m_SquareMesh(new Mesh()),
 	m_Projection(glm::ortho(-1.0f, 1.0f, -0.5625f, 0.5625f)),
-	m_PostShader(NULL), m_PostMesh(new Mesh())
+	m_PostShader(nullptr), m_PostMesh(new Mesh())
 {
 	// Compile/Load shaders
 	
@@ -99,9 +99,7 @@ void PostProcessQuad::Resize(const int& width, const int& height)
 		return;
 
 	// Resize render output
-	Renderer::Submit([width, height]() {
-		glViewport(0, 0, width, height);
-	});
+	Renderer::SetViewport(width, height);
 
 	// Resize framebuffer
 	m_Framebuffer->Resize(width, height);

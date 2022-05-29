@@ -20,7 +20,7 @@ ComputeTexture::ComputeTexture(GLFWwindow* window)
 	m_RenderShader(NULL), m_TextureShader(NULL),
 	m_SquareMesh(new Mesh()),
 	m_Projection(glm::ortho(-1.0f, 1.0f, -0.5625f, 0.5625f)),
-	m_Texture(new Texture(256, 256, InternalImageFormat::RGBA8))
+	m_Texture(new Texture(256, 256))
 {
 	// Load/Compile and initialize shaders
 
@@ -79,9 +79,7 @@ ComputeTexture::ComputeTexture(GLFWwindow* window)
 void ComputeTexture::Resize(const int& width, const int& height)
 {
 	// Resize render output
-	Renderer::Submit([width, height]() {
-		glViewport(0, 0, width, height);
-	});
+	Renderer::SetViewport(width, height);
 
 	// Update projection to preserve the aspect ratio and send it to the shader
 	if (width > height)

@@ -8,7 +8,7 @@ public:
 	VertexBuffer(const void* data, size_t size);
 	virtual ~VertexBuffer();
 
-	virtual void Bind() const override;
+	virtual void Bind() override;
 private:
-	static uint32_t m_BoundRendererID;
+	static VertexBuffer* m_BoundVertexBuffer;
 };

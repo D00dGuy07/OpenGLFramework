@@ -2,7 +2,7 @@
 
 #include "Renderer.h"
 
-uint32_t IndexBuffer::m_BoundRendererID = 0xFFFFFFFF;
+IndexBuffer* IndexBuffer::m_BoundIndexBuffer = nullptr;
 
 IndexBuffer::IndexBuffer(const uint32_t* data, uint32_t count)
 	: GLBuffer()
@@ -13,20 +13,22 @@ IndexBuffer::IndexBuffer(const uint32_t* data, uint32_t count)
 
 IndexBuffer::~IndexBuffer()
 {
+	if (m_BoundIndexBuffer == this)
+		m_BoundIndexBuffer = nullptr;
+
 	uint32_t id = m_RendererID;
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == id)
-			m_BoundRendererID = 0xFFFFFFFF;
 		glDeleteBuffers(1, &id);
 	});
 }
 
-void IndexBuffer::Bind() const
+void IndexBuffer::Bind()
 {
+	if (m_BoundIndexBuffer == this)
+		return;
+	m_BoundIndexBuffer = this;
+
 	Renderer::Submit([=]() {
-		if (m_BoundRendererID == m_RendererID)
-			return;
-		m_BoundRendererID = m_RendererID;
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
 	});
 }
