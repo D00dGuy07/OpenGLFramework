@@ -64,6 +64,13 @@ void Renderer::SetDepthRange(double near, double far)
 	});
 }
 
+void Renderer::SetClearColor(glm::vec4 color)
+{
+	Submit([=]() {
+		glClearColor(color.r, color.g, color.b, color.a);
+	});
+}
+
 void Renderer::SetViewport(int32_t x, int32_t y, int32_t width, int32_t height)
 {
 	Submit([=]() {

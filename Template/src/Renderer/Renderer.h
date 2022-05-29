@@ -3,6 +3,7 @@
 #include <utility>
 
 #include "glad/glad.h"
+#include "glm/glm.hpp"
 
 #include "Renderer/RenderCommandQueue.h"
 #include "Renderer/Mesh.h"
@@ -78,6 +79,8 @@ public:
 
 	static void SetDepthRange(float near, float far);
 	static void SetDepthRange(double near, double far);
+
+	static void SetClearColor(glm::vec4 color);
 
 	static void SetViewport(int32_t x, int32_t y, int32_t width, int32_t height);
 	static inline void SetViewport(int32_t width, int32_t height) { SetViewport(0, 0, width, height); }
