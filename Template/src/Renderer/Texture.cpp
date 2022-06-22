@@ -15,11 +15,11 @@ uint32_t Texture::m_MaxImageUnits = 0U;
 Texture::Texture(const std::string& path, const TextureSpec& spec)
 	: ImageBuffer(NULL, 0, 0), m_BPP(0), m_Spec(spec)
 {
-	Renderer::Submit([&, path]() {
-		// Load image data
-		stbi_set_flip_vertically_on_load(1);
-		uint8_t* imageData = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
+	// Load image data
+	stbi_set_flip_vertically_on_load(1);
+	m_LocalData = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
 
+	Renderer::Submit([&, path]() {
 		// Create texture object
 		glGenTextures(1, &m_RendererID);
 		glBindTexture(GL_TEXTURE_2D, m_RendererID);
@@ -35,12 +35,12 @@ Texture::Texture(const std::string& path, const TextureSpec& spec)
 		// Create and fill buffer
 		int32_t sizedId = 0, baseId = 0;
 		ImageBuffer::GetFormatData(m_Spec.Format, sizedId, baseId);
-		glTexImage2D(GL_TEXTURE_2D, 0, sizedId, m_Width, m_Height, 0, baseId, GL_UNSIGNED_BYTE, imageData);
+		glTexImage2D(GL_TEXTURE_2D, 0, sizedId, m_Width, m_Height, 0, baseId, GL_UNSIGNED_BYTE, m_LocalData);
 
 		// Unbind texture and free local image data
 		glBindTexture(GL_TEXTURE_2D, 0);
-		if (imageData)
-			stbi_image_free(imageData);
+		if (m_LocalData)
+			stbi_image_free(m_LocalData);
 	});
 
 	if (m_MaxTextureUnits == 0 || m_MaxImageUnits == 0)

@@ -102,6 +102,12 @@
     <ClCompile Include="src\Util\GarbageHeap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Demos\Particles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\UniformBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\IndexBuffer.h">
@@ -1052,6 +1058,12 @@
     <ClInclude Include="src\Util\GarbageHeap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Demos\Particles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\UniformBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\glm\detail\func_common.inl">
@@ -1469,5 +1481,7 @@
     <None Include="res\ComputeVertices\Render.shader" />
     <None Include="res\ComputeVertices\Vertices.shader" />
     <None Include="res\InstancedCube\Render.shader" />
+    <None Include="res\Particles\Particle.shader" />
+    <None Include="res\Particles\Post.shader" />
   </ItemGroup>
 </Project>

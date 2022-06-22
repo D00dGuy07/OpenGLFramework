@@ -62,8 +62,6 @@ void ShaderBuffer::BindIndexed(uint32_t index)
 	});
 }
 
-
-
 void ShaderBuffer::ReserveBindings()
 {
 	glGetIntegerv(GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS, reinterpret_cast<int32_t*>(&m_MaxIndexedTargets));

@@ -148,7 +148,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -162,6 +162,7 @@
     <ClCompile Include="src\Demos\ComputeTexture.cpp" />
     <ClCompile Include="src\Demos\ComputeVertices.cpp" />
     <ClCompile Include="src\Demos\InstancedCube.cpp" />
+    <ClCompile Include="src\Demos\Particles.cpp" />
     <ClCompile Include="src\Demos\PostProcessQuad.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Renderer\ComputeShader.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="src\Renderer\ShaderBase.cpp" />
     <ClCompile Include="src\Renderer\ShaderBuffer.cpp" />
     <ClCompile Include="src\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Renderer\UniformBuffer.cpp" />
     <ClCompile Include="src\Util\GarbageHeap.cpp" />
     <ClCompile Include="src\Util\GLFWLoad.cpp" />
     <ClCompile Include="src\Util\Helpers.cpp" />
@@ -194,6 +196,7 @@
     <ClInclude Include="src\Demos\ComputeTexture.h" />
     <ClInclude Include="src\Demos\ComputeVertices.h" />
     <ClInclude Include="src\Demos\InstancedCube.h" />
+    <ClInclude Include="src\Demos\Particles.h" />
     <ClInclude Include="src\Demos\PostProcessQuad.h" />
     <ClInclude Include="src\Renderer\ComputeShader.h" />
     <ClInclude Include="src\Renderer\Framebuffer.h" />
@@ -209,6 +212,7 @@
     <ClInclude Include="src\Renderer\ShaderBase.h" />
     <ClInclude Include="src\Renderer\ShaderBuffer.h" />
     <ClInclude Include="src\Renderer\Texture.h" />
+    <ClInclude Include="src\Renderer\UniformBuffer.h" />
     <ClInclude Include="src\Util\Events\CallbackList.h" />
     <ClInclude Include="src\Util\Events\EventConnection.h" />
     <ClInclude Include="src\Util\Events\EventQueue.h" />
@@ -512,6 +516,8 @@
     <None Include="res\ComputeVertices\Render.shader" />
     <None Include="res\ComputeVertices\Vertices.shader" />
     <None Include="res\InstancedCube\Render.shader" />
+    <None Include="res\Particles\Particle.shader" />
+    <None Include="res\Particles\Post.shader" />
     <None Include="res\PostProcessQuad\Square.shader" />
     <None Include="res\PostProcessQuad\PostProcessing.shader" />
     <None Include="vendor\glm\detail\func_common.inl" />

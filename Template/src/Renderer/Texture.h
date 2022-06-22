@@ -62,6 +62,7 @@ public:
 	
 private:
 	int32_t m_BPP;
+	uint8_t* m_LocalData = nullptr;
 	TextureSpec m_Spec;
 
 	static std::vector<Texture*> m_BoundTextureUnits;

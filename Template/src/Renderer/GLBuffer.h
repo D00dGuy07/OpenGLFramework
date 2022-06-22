@@ -50,4 +50,5 @@ protected:
 	Target m_Target = static_cast<Target>(0);
 
 	void SetContents(const void* data, size_t size, Target target, Usage usage);
+	void UpdateContents(const void* data, int32_t offset, size_t size);
 };
